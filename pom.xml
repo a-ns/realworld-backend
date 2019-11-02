@@ -11,6 +11,7 @@
         <module>adapters/web</module>
         <module>adapters/persistence</module>
         <module>runner</module>
+        <module>adapters/event</module>
     </modules>
 
     <parent>
