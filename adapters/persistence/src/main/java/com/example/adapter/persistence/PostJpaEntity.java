@@ -1,13 +1,8 @@
 package com.example.adapter.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import lombok.*;
+import lombok.experimental.Wither;
 
 @Entity
 @AllArgsConstructor
@@ -17,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "post")
 class PostJpaEntity {
 
-  @Id private int id;
+  @Wither @Id @GeneratedValue private int id;
 
   @Column private String title;
 

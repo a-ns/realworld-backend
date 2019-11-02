@@ -12,6 +12,21 @@ type Query {
     recentPosts(count: Int, offset: Int): [Post]!
 }
 
+input PostInput {
+    title: String!
+    text: String!
+    category: String
+    author: String!
+}
+
+input PostUpdateInput {
+    title: String
+    text: String
+    category: String
+    author: String
+}
+
 type Mutation {
-    addPost: Boolean!
+    addPost(input: PostInput!): Post
+    updatePost(id: ID!, input: PostUpdateInput!): Post
 }
