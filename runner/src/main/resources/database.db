@@ -1,0 +1,1 @@
+insert into post values(1, "Title 1", "Body of the post", "science", "bill")
