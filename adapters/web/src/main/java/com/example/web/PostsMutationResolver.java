@@ -3,13 +3,14 @@ package com.example.web;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.example.Post;
 import com.example.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 class PostsMutationResolver implements GraphQLMutationResolver {
 
-  @Autowired private PostService service;
+  private PostService service;
 
   public Post addPost(PostInput input) {
     try {

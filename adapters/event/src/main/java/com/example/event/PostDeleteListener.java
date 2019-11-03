@@ -1,16 +1,14 @@
 package com.example.event;
 
-import com.example.PostService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
 @Component
-public class PostListener implements Listener<PostEvent> {
+@AllArgsConstructor
+public class PostDeleteListener implements Listener<PostEvent> {
 
-  private final PostService service;
-
-  private final PostEventMapper mapper;
+  private Logger logger;
 
   @Override
   public String listensOn() {
@@ -19,7 +17,8 @@ public class PostListener implements Listener<PostEvent> {
 
   @Override
   public void process(PostEvent event) {
-    service.createPost(mapper.eventDataToDomain(event));
+    logger.warn("In PostDeleteListener");
+    return;
   }
 
   @Override
