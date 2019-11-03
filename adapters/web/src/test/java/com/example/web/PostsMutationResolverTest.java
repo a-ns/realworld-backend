@@ -1,7 +1,7 @@
 package com.example.web;
 
 import com.example.Post;
-import com.example.ports.out.AddPostPort;
+import com.example.PostService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @DisplayName("Posts Mutations")
 public class PostsMutationResolverTest {
 
-  @Mock AddPostPort postDao;
+  @Mock PostService postDao;
 
   @InjectMocks PostsMutationResolver sut;
 
@@ -24,8 +24,8 @@ public class PostsMutationResolverTest {
   public void test() {
     // Arrange
     PostInput input = PostInput.builder().author("").category("").text("").title("").build();
-    Mockito.when(postDao.addPost("", "", "", ""))
-        .thenReturn(Post.builder().author("").category("").text("").title("").build());
+    Post post = Post.builder().author("").category("").text("").title("").build();
+    Mockito.when(postDao.createPost(Mockito.any(Post.class))).thenReturn(post);
     // Act
     Post actual = sut.addPost(input);
     // Assert

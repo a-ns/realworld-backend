@@ -1,4 +1,4 @@
-package com.example.adapter.persistence;
+package com.example.adapter.persistence.post;
 
 import com.example.Post;
 import org.springframework.stereotype.Component;

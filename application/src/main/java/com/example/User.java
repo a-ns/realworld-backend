@@ -1,4 +1,4 @@
-package com.example.web.dto;
+package com.example;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,10 +7,11 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 @Builder
-public class UserResponse {
+public class User {
   private String email;
-  private String token;
   private String username;
+  private String password;
+  private String token;
   private String bio;
   private String image;
 }

@@ -1,4 +1,4 @@
-package com.example.adapter.persistence;
+package com.example.adapter.persistence.post;
 
 import javax.persistence.*;
 import lombok.*;
