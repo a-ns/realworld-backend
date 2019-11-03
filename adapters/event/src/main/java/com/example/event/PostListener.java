@@ -2,13 +2,15 @@ package com.example.event;
 
 import com.example.PostService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
+@Component
 public class PostListener implements Listener<PostEvent> {
 
   private final PostService service;
 
-  private final PostMapper mapper;
+  private final PostEventMapper mapper;
 
   @Override
   public String listensOn() {

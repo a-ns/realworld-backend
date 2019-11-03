@@ -3,6 +3,7 @@ package com.example;
 import com.example.ports.in.GetPostsPort;
 import com.example.ports.out.AddPostPort;
 import com.example.ports.out.UpdatePostPort;
+import java.util.List;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,10 @@ public class PostService /* implements PostUseCases */ {
   private final UpdatePostPort updatePostPort;
   private final GetPostsPort getPostsPort;
   private final AddPostPort addPostsPort;
+
+  public List<Post> getPosts() {
+    return this.getPostsPort.getPosts();
+  }
 
   public Post updatePost(Integer id, Post input) {
     try {
@@ -32,6 +37,8 @@ public class PostService /* implements PostUseCases */ {
   }
 
   public Post createPost(Post input) {
+
+    // do some business validation logic
     return this.addPostsPort.addPost(
         input.getTitle(), input.getText(), input.getAuthor(), input.getCategory());
   }

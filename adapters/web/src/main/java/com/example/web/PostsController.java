@@ -1,8 +1,7 @@
 package com.example.web;
 
 import com.example.Post;
-import com.example.ports.in.GetPostsPort;
-import com.example.ports.out.AddPostPort;
+import com.example.PostService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class PostsController {
 
-  private final GetPostsPort getPostsPort;
-
-  private final AddPostPort addPostPort;
+  private PostService service;
 
   @GetMapping
   public List<Post> getAllPosts() {
-    return getPostsPort.getPosts();
+    return service.getPosts();
   }
 
   @PostMapping
   public Post createPost(@RequestBody Post body) {
-    return this.addPostPort.addPost(
-        body.getTitle(), body.getText(), body.getAuthor(), body.getCategory());
+    return this.service.createPost(body);
   }
 }

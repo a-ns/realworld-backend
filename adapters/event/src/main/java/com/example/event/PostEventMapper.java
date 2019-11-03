@@ -1,8 +1,10 @@
 package com.example.event;
 
 import com.example.Post;
+import org.springframework.stereotype.Component;
 
-public class PostMapper {
+@Component
+class PostEventMapper {
 
   Post eventDataToDomain(PostEvent event) {
     return Post.builder()
