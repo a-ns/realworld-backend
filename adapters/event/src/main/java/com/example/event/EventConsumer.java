@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EventConsumer {
 
-  List<Listener<PostEvent>> listeners;
+  List<Listener> listeners;
   Gson gson;
   Logger logger;
 
