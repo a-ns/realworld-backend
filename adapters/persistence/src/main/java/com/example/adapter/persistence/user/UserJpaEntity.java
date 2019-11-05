@@ -1,16 +1,14 @@
 package com.example.adapter.persistence.user;
 
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
+@Setter
 @Table(name = "user_e")
 class UserJpaEntity {
 

@@ -8,9 +8,16 @@ import lombok.Data;
 @Data
 @Builder
 public class UserResponse {
-  private String email;
-  private String token;
-  private String username;
-  private String bio;
-  private String image;
+  private User user;
+
+  @AllArgsConstructor
+  @Data
+  @Builder
+  public static class User {
+    private String email;
+    private String token;
+    private String username;
+    private String bio;
+    private String image;
+  }
 }

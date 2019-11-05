@@ -6,17 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
-public class UserLogin {
+@Data
+@Builder
+public class UserUpdateRequest {
 
-  private Body user;
+  private User user;
 
-  @Builder
+  @AllArgsConstructor
   @Data
-  public static class Body {
-
+  @NoArgsConstructor
+  @Builder
+  public static class User {
     private String email;
     private String password;
+    private String username;
+    private String bio;
+    private String image;
   }
 }

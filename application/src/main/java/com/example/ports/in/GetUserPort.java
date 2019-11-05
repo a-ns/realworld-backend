@@ -1,9 +1,10 @@
 package com.example.ports.in;
 
 import com.example.User;
+import java.util.Optional;
 
 public interface GetUserPort {
-  User getUserByUsername(String username);
+  Optional<User> getUserByUsername(String username);
 
-  User getUserByEmail(String email);
+  Optional<User> getUserByEmail(String email);
 }

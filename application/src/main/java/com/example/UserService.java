@@ -1,7 +1,15 @@
 package com.example;
 
+import com.example.exceptions.EmailAreadyTakenException;
+import com.example.exceptions.UserNotFoundException;
+import com.example.exceptions.UsernameAlreadyTakenException;
+import com.example.ports.in.AuthPort;
 import com.example.ports.in.GetUserPort;
 import com.example.ports.out.RegisterUserPort;
+import com.example.ports.out.UpdateUserPort;
+import java.util.Optional;
+import javax.security.auth.login.FailedLoginException;
+import javax.security.auth.login.LoginException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +23,8 @@ public class UserService {
 
   private final GetUserPort getUserPort;
   private final RegisterUserPort registerUserPort;
-  private final AuthService authService;
+  private final AuthPort authService;
+  private final UpdateUserPort updateUserPort;
 
   public User register(String username, String email, String password) {
     assert username != null;
@@ -25,13 +34,13 @@ public class UserService {
     assert !email.isBlank();
     assert !password.isBlank();
     assert password.length() > 5;
-    User user = this.registerUserPort.registerUser(username, email, password);
-    String token = this.authService.login(user.getEmail(), user.getPassword());
+    User user = this.registerUserPort.registerUser(username, email, authService.encrypt(password));
+    String token = this.authService.generateToken(user);
     user.setToken(token);
     return user;
   }
 
-  public User getUser(String value, SearchType searchType) {
+  public Optional<User> getUser(String value, SearchType searchType) {
     switch (searchType) {
       case USERNAME:
         return getUserPort.getUserByUsername(value);
@@ -42,10 +51,52 @@ public class UserService {
     }
   }
 
-  public User login(String email, String password) {
-    String token = this.authService.login(email, password);
-    User user = this.getUserPort.getUserByEmail(email);
+  public User login(String email, String password) throws FailedLoginException {
+    String token;
+    try {
+      token = this.authService.login(email, password);
+    } catch (LoginException e) {
+      throw new FailedLoginException();
+    }
+    User user = this.getUserPort.getUserByEmail(email).orElseThrow(FailedLoginException::new);
     user.setToken(token);
     return user;
+  }
+
+  public User updateUser(String previousUsername, User updatePayload) {
+
+    User existing =
+        getUserPort.getUserByUsername(previousUsername).orElseThrow(UserNotFoundException::new);
+
+    if (updatePayload.getUsername() != null && !updatePayload.getUsername().isBlank()) {
+
+      Optional<User> collidingUsername = getUser(updatePayload.getUsername(), SearchType.USERNAME);
+      if (collidingUsername.isPresent()) {
+        throw new UsernameAlreadyTakenException();
+      }
+      existing.setUsername(updatePayload.getUsername());
+    }
+    if (updatePayload.getEmail() != null && isValidEmail(updatePayload.getEmail())) {
+      Optional<User> collingEmail = getUser(updatePayload.getEmail(), SearchType.EMAIL);
+      if (collingEmail.isPresent()) {
+        throw new EmailAreadyTakenException();
+      }
+      existing.setEmail(updatePayload.getEmail());
+    }
+    if (updatePayload.getPassword() != null && !updatePayload.getPassword().isBlank()) {
+      existing.setPassword(authService.encrypt(updatePayload.getPassword()));
+    }
+    if (updatePayload.getImage() != null) {
+      existing.setImage(updatePayload.getImage());
+    }
+    if (updatePayload.getBio() != null) {
+      existing.setBio(updatePayload.getBio());
+    }
+
+    return this.updateUserPort.save(previousUsername, existing);
+  }
+
+  private Boolean isValidEmail(String email) {
+    return true; // TODO implement later
   }
 }
