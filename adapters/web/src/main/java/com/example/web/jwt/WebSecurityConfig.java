@@ -1,4 +1,4 @@
-package com.example.web;
+package com.example.web.jwt;
 
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;

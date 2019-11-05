@@ -18,11 +18,8 @@ public class UserController {
   private AuthService auth;
 
   @PutMapping
-  @Auth
   public ResponseEntity<UserResponse> replace(
-      @RequestBody UserUpdateRequest body,
-      @AuthenticationPrincipal User user,
-      @RequestHeader("Authorization") String token) {
+      @RequestBody UserUpdateRequest body, @AuthenticationPrincipal User user) {
     String currentUser = user.getUsername();
     try {
       User mapped = this.userService.updateUser(currentUser, userMapper.mapResponseToUser(body));

@@ -1,4 +1,4 @@
-package com.example.web;
+package com.example.web.jwt;
 
 import com.example.ports.in.GetUserPort;
 import java.io.IOException;
@@ -47,7 +47,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     authenticationToken.setDetails(
                                         new WebAuthenticationDetailsSource().buildDetails(request));
                                     SecurityContextHolder.getContext()
-                                        .setAuthentication(authenticationToken);
+                                        .setAuthentication(
+                                            authenticationToken); // @AuthenticationPrincipal gets
+                                    // set here
                                   });
                         }
                       });
