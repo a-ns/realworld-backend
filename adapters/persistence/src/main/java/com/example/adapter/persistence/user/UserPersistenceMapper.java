@@ -4,7 +4,7 @@ import com.example.User;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserPersistenceMapper {
+public class UserPersistenceMapper {
   public User mapJpaEntityToDomain(UserJpaEntity user) {
     return User.builder()
         .bio(user.getBio())

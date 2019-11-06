@@ -4,18 +4,35 @@ import com.example.exceptions.EmailAreadyTakenException;
 import com.example.exceptions.UserNotFoundException;
 import com.example.exceptions.UsernameAlreadyTakenException;
 import com.example.ports.in.AuthPort;
+import com.example.ports.in.GetProfileQuery;
 import com.example.ports.in.GetUserPort;
+import com.example.ports.out.FollowUserPort;
+import com.example.ports.out.LoadProfilePort;
 import com.example.ports.out.RegisterUserPort;
 import com.example.ports.out.UpdateUserPort;
+import com.example.usecases.FollowUserUseCase;
 import java.util.Optional;
 import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class UserService {
+@Transactional
+public class UserService implements FollowUserUseCase, GetProfileQuery {
+
+  private LoadProfilePort profilePort;
+
+  @Override
+  public Profile getProfile(String username, Optional<User> request) {
+    Boolean isFollowing = profilePort.isFollowing(username, request.orElse(null));
+    Profile p = profilePort.loadProfile(username);
+    p.setFollowing(isFollowing);
+    return p;
+  }
+
   public enum SearchType {
     USERNAME,
     EMAIL
@@ -25,6 +42,17 @@ public class UserService {
   private final RegisterUserPort registerUserPort;
   private final AuthPort authService;
   private final UpdateUserPort updateUserPort;
+  private final FollowUserPort followUserPort;
+
+  @Override
+  public Profile follow(User followed, User follower) {
+    return this.followUserPort.saveFollowRelation(followed, follower);
+  }
+
+  @Override
+  public Profile unfollow(User followed, User follower) {
+    return this.followUserPort.removeFollowRelation(followed, follower);
+  }
 
   public User register(String username, String email, String password) {
     assert username != null;

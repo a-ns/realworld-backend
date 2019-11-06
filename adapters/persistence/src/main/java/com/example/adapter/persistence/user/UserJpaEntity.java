@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Setter
 @Table(name = "user_e")
-class UserJpaEntity {
+public class UserJpaEntity {
 
   @Id @GeneratedValue private int id;
 

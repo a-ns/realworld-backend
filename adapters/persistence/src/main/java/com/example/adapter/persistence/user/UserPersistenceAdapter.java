@@ -1,7 +1,10 @@
 package com.example.adapter.persistence.user;
 
+import com.example.Profile;
 import com.example.User;
+import com.example.adapter.persistence.userfollow.UserFollowRepository;
 import com.example.ports.in.GetUserPort;
+import com.example.ports.out.LoadProfilePort;
 import com.example.ports.out.RegisterUserPort;
 import com.example.ports.out.UpdateUserPort;
 import java.util.Optional;
@@ -11,10 +14,12 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-class UserPersistenceAdapter implements GetUserPort, RegisterUserPort, UpdateUserPort {
+class UserPersistenceAdapter
+    implements GetUserPort, RegisterUserPort, UpdateUserPort, LoadProfilePort {
 
   private UserRepository repository;
   private UserPersistenceMapper mapper;
+  private UserFollowRepository followRepository;
 
   @Override
   public Optional<User> getUserByUsername(String username) {
@@ -48,5 +53,24 @@ class UserPersistenceAdapter implements GetUserPort, RegisterUserPort, UpdateUse
     UserJpaEntity mapped = mapper.mapDomainToJpaEntity(payload);
     mapped.setId(found.getId());
     return mapper.mapJpaEntityToDomain(repository.save(mapped));
+  }
+
+  @Override
+  public Profile loadProfile(String username) {
+    UserJpaEntity user = repository.findByUsername(username);
+    return Profile.builder()
+        .image(user.getImage())
+        .bio(user.getBio())
+        .following(false)
+        .username(user.getUsername())
+        .build();
+  }
+
+  @Override
+  public Boolean isFollowing(String username, User follower) {
+    if (follower == null) return false;
+    Integer followedId = this.repository.findByUsername(username).getId();
+    Integer followerId = this.repository.findByUsername(follower.getUsername()).getId();
+    return this.followRepository.existsByFollowerAndFollowed(followerId, followedId);
   }
 }
