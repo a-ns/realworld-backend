@@ -114,7 +114,7 @@ public class UserService implements FollowUserUseCase, GetProfileQuery {
     if (updatePayload.getPassword() != null && !updatePayload.getPassword().isBlank()) {
       existing.setPassword(authService.encrypt(updatePayload.getPassword()));
     }
-    if (updatePayload.getImage() != null) {
+    if (!"".equals(updatePayload.getImage())) {
       existing.setImage(updatePayload.getImage());
     }
     if (updatePayload.getBio() != null) {

@@ -12,5 +12,5 @@ public class Comment {
   private LocalDateTime createAt;
   private LocalDateTime updated;
   private String body;
-  private Author author;
+  private Profile author;
 }
