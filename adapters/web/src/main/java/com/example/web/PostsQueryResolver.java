@@ -2,7 +2,7 @@ package com.example.web;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.example.Post;
-import com.example.ports.in.GetPostsPort;
+import com.example.ports.out.GetPostsPort;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

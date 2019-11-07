@@ -1,4 +1,4 @@
-package com.example.ports.out;
+package com.example.ports.in;
 
 import com.example.User;
 

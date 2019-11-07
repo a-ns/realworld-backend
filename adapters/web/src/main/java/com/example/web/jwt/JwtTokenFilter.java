@@ -1,6 +1,6 @@
 package com.example.web.jwt;
 
-import com.example.ports.in.GetUserPort;
+import com.example.ports.out.GetUserPort;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;

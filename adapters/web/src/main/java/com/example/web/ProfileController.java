@@ -2,8 +2,8 @@ package com.example.web;
 
 import com.example.User;
 import com.example.exceptions.UserNotFoundException;
-import com.example.ports.in.GetProfileQuery;
-import com.example.ports.in.GetUserPort;
+import com.example.ports.out.GetProfileQuery;
+import com.example.ports.out.GetUserPort;
 import com.example.usecases.FollowUserUseCase;
 import com.example.web.dto.ProfileResponse;
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package com.example.web;
 
 import com.example.Post;
-import com.example.ports.in.GetPostsPort;
+import com.example.ports.out.GetPostsPort;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

@@ -2,10 +2,10 @@ package com.example;
 
 import com.example.exceptions.ArticleAlreadyExistsException;
 import com.example.exceptions.ArticleNotFoundException;
-import com.example.ports.in.FindArticlePort;
-import com.example.ports.out.CreateArticlePort;
-import com.example.ports.out.DeleteArticlePort;
-import com.example.ports.out.UpdateArticlePort;
+import com.example.ports.in.CreateArticlePort;
+import com.example.ports.in.DeleteArticlePort;
+import com.example.ports.in.UpdateArticlePort;
+import com.example.ports.out.FindArticlePort;
 import com.example.usecases.DeleteArticleUseCase;
 import com.example.usecases.EditArticleUseCase;
 import com.example.usecases.PublishArticleUseCase;

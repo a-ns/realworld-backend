@@ -1,8 +1,8 @@
 package com.example.web;
 
 import com.example.User;
-import com.example.ports.in.AuthPort;
-import com.example.ports.in.GetUserPort;
+import com.example.ports.out.AuthPort;
+import com.example.ports.out.GetUserPort;
 import com.example.web.jwt.JwtService;
 import javax.security.auth.login.LoginException;
 import lombok.AllArgsConstructor;

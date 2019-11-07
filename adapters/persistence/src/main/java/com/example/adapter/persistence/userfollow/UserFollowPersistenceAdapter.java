@@ -4,7 +4,7 @@ import com.example.Profile;
 import com.example.User;
 import com.example.adapter.persistence.user.UserJpaEntity;
 import com.example.adapter.persistence.user.UserRepository;
-import com.example.ports.out.FollowUserPort;
+import com.example.ports.in.FollowUserPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

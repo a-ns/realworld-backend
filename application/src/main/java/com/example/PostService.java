@@ -1,8 +1,8 @@
 package com.example;
 
-import com.example.ports.in.GetPostsPort;
-import com.example.ports.out.AddPostPort;
-import com.example.ports.out.UpdatePostPort;
+import com.example.ports.in.AddPostPort;
+import com.example.ports.in.UpdatePostPort;
+import com.example.ports.out.GetPostsPort;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;

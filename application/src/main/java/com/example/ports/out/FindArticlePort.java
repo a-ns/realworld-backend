@@ -1,4 +1,4 @@
-package com.example.ports.in;
+package com.example.ports.out;
 
 import com.example.Article;
 import java.util.Optional;
