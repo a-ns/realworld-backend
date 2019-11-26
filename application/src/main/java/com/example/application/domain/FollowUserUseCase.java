@@ -1,4 +1,4 @@
-package com.example.application.domain.usecases;
+package com.example.application.domain;
 
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;

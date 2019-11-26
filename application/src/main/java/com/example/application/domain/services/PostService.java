@@ -1,20 +1,20 @@
-package com.example.application.domain;
+package com.example.application.domain.services;
 
+import com.example.application.domain.CreatePostUseCase;
 import com.example.application.domain.model.Post;
 import com.example.application.domain.ports.in.AddPostPort;
 import com.example.application.domain.ports.in.UpdatePostPort;
 import com.example.application.domain.ports.out.GetPostsPort;
-
-import java.util.List;
-import javax.transaction.Transactional;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @AllArgsConstructor
 @Component
 @Transactional
-public class PostService /* implements PostUseCases */ {
+class PostService implements CreatePostUseCase, UpdatePostPort {
 
   private final UpdatePostPort updatePostPort;
   private final GetPostsPort getPostsPort;
@@ -39,10 +39,11 @@ public class PostService /* implements PostUseCases */ {
     }
   }
 
+  @Override
   public Post createPost(Post input) {
 
     // do some business validation logic
     return this.addPostsPort.addPost(
-        input.getTitle(), input.getText(), input.getAuthor(), input.getCategory());
+            input.getTitle(), input.getText(), input.getAuthor(), input.getCategory());
   }
 }

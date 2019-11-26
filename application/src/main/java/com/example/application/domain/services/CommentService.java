@@ -1,15 +1,15 @@
-package com.example.application.domain;
-
-import java.util.Collections;
-import java.util.List;
+package com.example.application.domain.services;
 
 import com.example.application.domain.model.Comment;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
+
 @AllArgsConstructor
 @Component
-public class CommentService {
+class CommentService {
 
   //  private CommentReadPort commentReadPort;
 

@@ -1,16 +1,17 @@
 package com.example.adapters.web;
 
+import com.example.adapters.web.dto.ProfileResponse;
+import com.example.application.domain.FollowUserUseCase;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.out.GetProfileQuery;
 import com.example.application.domain.ports.out.GetUserPort;
-import com.example.application.domain.usecases.FollowUserUseCase;
-import com.example.adapters.web.dto.ProfileResponse;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/profiles")

@@ -1,8 +1,8 @@
-package com.example.application.domain.usecases;
+package com.example.application.domain;
 
 import com.example.application.domain.exceptions.ArticleNotFoundException;
-import com.example.application.domain.model.EditArticleCommand;
 import com.example.application.domain.model.Article;
+import com.example.application.domain.model.EditArticleCommand;
 
 public interface EditArticleUseCase {
 

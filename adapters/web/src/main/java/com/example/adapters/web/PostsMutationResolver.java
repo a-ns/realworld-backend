@@ -1,8 +1,9 @@
 package com.example.adapters.web;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.example.application.domain.CreatePostUseCase;
+import com.example.application.domain.UpdatePostUseCase;
 import com.example.application.domain.model.Post;
-import com.example.application.domain.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +11,12 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 class PostsMutationResolver implements GraphQLMutationResolver {
 
-  private PostService service;
+  private CreatePostUseCase createPost;
+  private UpdatePostUseCase updatePost;
 
   public Post addPost(PostInput input) {
     try {
-      return this.service.createPost(
+      return this.createPost.createPost(
           Post.builder()
               .title(input.getTitle())
               .text(input.getText())
@@ -27,7 +29,7 @@ class PostsMutationResolver implements GraphQLMutationResolver {
   }
 
   public Post updatePost(Integer id, PostUpdateInput input) {
-    return this.service.updatePost(
+    return this.updatePost.updatePost(
         id,
         Post.builder()
             .author(input.getAuthor())

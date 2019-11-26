@@ -1,6 +1,6 @@
 package com.example.adapters.event;
 
-import com.example.application.domain.PostService;
+import com.example.application.domain.CreatePostUseCase;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostCreateListener implements Listener<PostEvent> {
 
-  private final PostService service;
+  private final CreatePostUseCase service;
 
   private final PostEventMapper mapper;
 

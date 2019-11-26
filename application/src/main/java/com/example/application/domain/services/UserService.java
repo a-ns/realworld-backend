@@ -1,30 +1,33 @@
-package com.example.application.domain;
+package com.example.application.domain.services;
 
+import com.example.application.domain.FollowUserUseCase;
+import com.example.application.domain.LoginUserUseCase;
+import com.example.application.domain.RegisterUserUseCase;
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
+import com.example.application.domain.exceptions.ExistingUserFoundException;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
-import com.example.application.domain.model.User;
-import com.example.application.domain.ports.in.RegisterUserPort;
-import com.example.application.domain.ports.in.UpdateUserPort;
-import com.example.application.domain.ports.out.GetUserPort;
 import com.example.application.domain.model.Profile;
+import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.FollowUserPort;
 import com.example.application.domain.ports.in.LoadProfilePort;
+import com.example.application.domain.ports.in.RegisterUserPort;
+import com.example.application.domain.ports.in.UpdateUserPort;
 import com.example.application.domain.ports.out.AuthPort;
 import com.example.application.domain.ports.out.GetProfileQuery;
-import com.example.application.domain.usecases.FollowUserUseCase;
-import java.util.Optional;
+import com.example.application.domain.ports.out.GetUserPort;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
 import javax.transaction.Transactional;
-
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Component
 @Transactional
-public class UserService implements FollowUserUseCase, GetProfileQuery {
+class UserService implements FollowUserUseCase, GetProfileQuery, RegisterUserUseCase, LoginUserUseCase {
 
   private LoadProfilePort profilePort;
   private final GetUserPort getUserPort;
@@ -41,6 +44,7 @@ public class UserService implements FollowUserUseCase, GetProfileQuery {
     p.setFollowing(isFollowing);
     return p;
   }
+
 
   public enum SearchType {
     USERNAME,
@@ -59,7 +63,7 @@ public class UserService implements FollowUserUseCase, GetProfileQuery {
     return this.followUserPort.removeFollowRelation(followed, follower);
   }
 
-  public User register(String username, String email, String password) {
+  public User registerUser(String username, String email, String password) throws ExistingUserFoundException {
     assert username != null;
     assert email != null;
     assert password != null;

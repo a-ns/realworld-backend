@@ -1,7 +1,7 @@
 package com.example.adapters.web;
 
+import com.example.application.domain.CreatePostUseCase;
 import com.example.application.domain.model.Post;
-import com.example.application.domain.PostService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @DisplayName("Posts Mutations")
 public class PostsMutationResolverTest {
 
-  @Mock PostService postDao;
+  @Mock
+  CreatePostUseCase postDao;
 
   @InjectMocks PostsMutationResolver sut;
 

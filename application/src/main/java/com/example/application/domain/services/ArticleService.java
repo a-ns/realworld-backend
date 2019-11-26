@@ -1,14 +1,14 @@
-package com.example.application.domain;
+package com.example.application.domain.services;
 
+import com.example.application.domain.*;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.*;
 import com.example.application.domain.ports.in.CreateArticlePort;
-import com.example.application.domain.ports.in.UpdateArticlePort;
 import com.example.application.domain.ports.in.DeleteArticlePort;
 import com.example.application.domain.ports.in.FavoritePort;
+import com.example.application.domain.ports.in.UpdateArticlePort;
 import com.example.application.domain.ports.out.*;
-import com.example.application.domain.usecases.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-class ArticleService implements PublishArticleUseCase, EditArticleUseCase, DeleteArticleUseCase, GetArticleQuery, UnfavoriteArticleUseCase, FavoriteArticleUseCase, FindFavoriteUseCase {
+class ArticleService implements PublishArticleUseCase, EditArticleUseCase, DeleteArticleUseCase, GetArticleQuery, FavoriteArticleUseCase, FindFavoriteUseCase {
 
   private CreateArticlePort createArticlePort;
   private FindArticlePort findArticlePort;

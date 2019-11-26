@@ -1,4 +1,4 @@
-package com.example.application.domain.usecases;
+package com.example.application.domain;
 
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.model.Article;

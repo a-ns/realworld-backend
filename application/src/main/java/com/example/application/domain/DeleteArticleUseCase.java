@@ -1,4 +1,4 @@
-package com.example.application.domain.usecases;
+package com.example.application.domain;
 
 public interface DeleteArticleUseCase {
 
