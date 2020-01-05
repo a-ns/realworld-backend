@@ -1,10 +1,10 @@
 package com.example.adapters.persistence.userfollow;
 
-import com.example.application.domain.model.User;
-import com.example.application.domain.model.Profile;
 import com.example.adapters.persistence.user.UserJpaEntity;
 import com.example.adapters.persistence.user.UserRepository;
-import com.example.application.domain.ports.in.FollowUserPort;
+import com.example.application.domain.model.Profile;
+import com.example.application.domain.model.User;
+import com.example.application.domain.ports.out.FollowUserPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -4,13 +4,13 @@ import com.example.adapters.persistence.user.UserJpaEntity;
 import com.example.adapters.persistence.user.UserPersistenceMapper;
 import com.example.adapters.persistence.user.UserRepository;
 import com.example.application.domain.model.Article;
-import com.example.application.domain.ports.in.CreateArticlePort;
-import com.example.application.domain.ports.in.DeleteArticlePort;
-import com.example.application.domain.ports.in.FavoritePort;
 import com.example.application.domain.ports.in.UpdateArticlePort;
 import com.example.application.domain.ports.out.ArticleFavoriteCountPort;
+import com.example.application.domain.ports.out.DeleteArticlePort;
 import com.example.application.domain.ports.out.FindArticlePort;
 import com.example.application.domain.ports.out.IsFavoritedPort;
+import com.example.application.domain.ports.out.SaveArticlePort;
+import com.example.application.domain.ports.out.SaveFavoritePort;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Component;
 @Component
 class ArticlePersistenceAdapter
     implements FindArticlePort,
-        CreateArticlePort,
+        SaveArticlePort,
         UpdateArticlePort,
         DeleteArticlePort,
         IsFavoritedPort,
         ArticleFavoriteCountPort,
-        FavoritePort {
+        SaveFavoritePort {
 
   private ArticleRepository repository;
   private ArticleMapper mapper;

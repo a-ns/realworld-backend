@@ -4,10 +4,9 @@ import com.example.adapters.persistence.userfollow.UserFollowRepository;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.LoadProfilePort;
-import com.example.application.domain.ports.in.RegisterUserPort;
-import com.example.application.domain.ports.in.UpdateUserPort;
 import com.example.application.domain.ports.out.GetUserPort;
-
+import com.example.application.domain.ports.out.SaveUserPort;
+import com.example.application.domain.ports.out.UpdateUserPort;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -15,8 +14,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-class UserPersistenceAdapter
-    implements GetUserPort, RegisterUserPort, UpdateUserPort, LoadProfilePort {
+class UserPersistenceAdapter implements GetUserPort, SaveUserPort, UpdateUserPort, LoadProfilePort {
 
   private UserRepository repository;
   private UserPersistenceMapper mapper;
@@ -26,7 +24,7 @@ class UserPersistenceAdapter
   public Optional<User> getUserByUsername(String username) {
     try {
       UserJpaEntity user = repository.findByUsername(username);
-      if(user == null) {
+      if (user == null) {
         return Optional.empty();
       }
       return Optional.of(mapper.mapJpaEntityToDomain(user));
@@ -39,7 +37,7 @@ class UserPersistenceAdapter
   public Optional<User> getUserByEmail(String email) {
     try {
       UserJpaEntity user = repository.findByEmail(email);
-      if(user == null) return Optional.empty();
+      if (user == null) return Optional.empty();
       return Optional.of(mapper.mapJpaEntityToDomain(user));
     } catch (EntityNotFoundException e) {
       return Optional.empty();

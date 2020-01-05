@@ -1,8 +1,8 @@
-package com.example.application.domain.ports.in;
+package com.example.application.domain.ports.out;
 
 import com.example.application.domain.model.Article;
 
-public interface FavoritePort {
+public interface SaveFavoritePort {
 
   Article addFavorite(Integer articleId, Integer userId);
 

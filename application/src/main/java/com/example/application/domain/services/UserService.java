@@ -9,33 +9,32 @@ import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
-import com.example.application.domain.ports.in.FollowUserPort;
+import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.in.LoadProfilePort;
-import com.example.application.domain.ports.in.RegisterUserPort;
-import com.example.application.domain.ports.in.UpdateUserPort;
 import com.example.application.domain.ports.out.AuthPort;
-import com.example.application.domain.ports.out.GetProfileQuery;
+import com.example.application.domain.ports.out.FollowUserPort;
 import com.example.application.domain.ports.out.GetUserPort;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-
+import com.example.application.domain.ports.out.SaveUserPort;
+import com.example.application.domain.ports.out.UpdateUserPort;
+import java.util.Optional;
 import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
 import javax.transaction.Transactional;
-import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
 @Transactional
-class UserService implements FollowUserUseCase, GetProfileQuery, RegisterUserUseCase, LoginUserUseCase {
+class UserService
+    implements FollowUserUseCase, GetProfileQuery, RegisterUserUseCase, LoginUserUseCase {
 
   private LoadProfilePort profilePort;
   private final GetUserPort getUserPort;
-  private final RegisterUserPort registerUserPort;
+  private final SaveUserPort saveUserPort;
   private final AuthPort authService;
   private final UpdateUserPort updateUserPort;
   private final FollowUserPort followUserPort;
-
 
   @Override
   public Profile getProfile(String username, Optional<User> request) {
@@ -45,13 +44,10 @@ class UserService implements FollowUserUseCase, GetProfileQuery, RegisterUserUse
     return p;
   }
 
-
   public enum SearchType {
     USERNAME,
     EMAIL
   }
-
-
 
   @Override
   public Profile follow(User followed, User follower) {
@@ -63,7 +59,8 @@ class UserService implements FollowUserUseCase, GetProfileQuery, RegisterUserUse
     return this.followUserPort.removeFollowRelation(followed, follower);
   }
 
-  public User registerUser(String username, String email, String password) throws ExistingUserFoundException {
+  public User registerUser(String username, String email, String password)
+      throws ExistingUserFoundException {
     assert username != null;
     assert email != null;
     assert password != null;
@@ -71,9 +68,19 @@ class UserService implements FollowUserUseCase, GetProfileQuery, RegisterUserUse
     assert !email.isBlank();
     assert !password.isBlank();
     assert password.length() > 5;
-    this.getUserPort.getUserByUsername(username).ifPresent((existing) -> {throw new UsernameAlreadyTakenException();});
-    this.getUserPort.getUserByEmail(email).ifPresent((existing) -> {throw new EmailAreadyTakenException();});
-    User user = this.registerUserPort.registerUser(username, email, authService.encrypt(password));
+    this.getUserPort
+        .getUserByUsername(username)
+        .ifPresent(
+            (existing) -> {
+              throw new UsernameAlreadyTakenException();
+            });
+    this.getUserPort
+        .getUserByEmail(email)
+        .ifPresent(
+            (existing) -> {
+              throw new EmailAreadyTakenException();
+            });
+    User user = this.saveUserPort.registerUser(username, email, authService.encrypt(password));
     String token = this.authService.generateToken(user);
     user.setToken(token);
     return user;
