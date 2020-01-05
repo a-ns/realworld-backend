@@ -1,4 +1,4 @@
-package com.example.application.domain;
+package com.example.application.domain.ports.in;
 
 public interface DeleteArticleUseCase {
 

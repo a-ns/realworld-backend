@@ -1,9 +1,9 @@
 package com.example.adapters.web;
 
 import com.example.adapters.web.dto.ProfileResponse;
-import com.example.application.domain.FollowUserUseCase;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.User;
+import com.example.application.domain.ports.in.FollowUserUseCase;
 import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.out.GetUserPort;
 import java.util.Optional;

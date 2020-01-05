@@ -1,11 +1,9 @@
 package com.example.application.domain.services;
 
-import com.example.application.domain.*;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.*;
-import com.example.application.domain.ports.in.GetArticleQuery;
-import com.example.application.domain.ports.in.GetProfileQuery;
+import com.example.application.domain.ports.in.*;
 import com.example.application.domain.ports.out.*;
 import com.example.application.domain.ports.out.DeleteArticlePort;
 import com.example.application.domain.ports.out.SaveArticlePort;

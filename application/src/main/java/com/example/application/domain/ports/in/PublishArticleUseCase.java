@@ -1,4 +1,4 @@
-package com.example.application.domain;
+package com.example.application.domain.ports.in;
 
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.model.Article;

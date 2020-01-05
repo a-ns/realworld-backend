@@ -1,4 +1,4 @@
-package com.example.application.domain;
+package com.example.application.domain.ports.in;
 
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;

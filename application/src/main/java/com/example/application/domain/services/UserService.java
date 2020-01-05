@@ -1,16 +1,16 @@
 package com.example.application.domain.services;
 
-import com.example.application.domain.FollowUserUseCase;
-import com.example.application.domain.LoginUserUseCase;
-import com.example.application.domain.RegisterUserUseCase;
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
 import com.example.application.domain.exceptions.ExistingUserFoundException;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
+import com.example.application.domain.ports.in.FollowUserUseCase;
 import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.in.LoadProfilePort;
+import com.example.application.domain.ports.in.LoginUserUseCase;
+import com.example.application.domain.ports.in.RegisterUserUseCase;
 import com.example.application.domain.ports.out.*;
 import java.util.Optional;
 import javax.security.auth.login.FailedLoginException;

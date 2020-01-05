@@ -2,15 +2,15 @@ package com.example.adapters.web;
 
 import com.example.adapters.web.dto.DraftArticle;
 import com.example.adapters.web.dto.GetArticleResponse;
-import com.example.application.domain.DeleteArticleUseCase;
-import com.example.application.domain.FavoriteArticleUseCase;
-import com.example.application.domain.PublishArticleUseCase;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.PublishArticleCommand;
 import com.example.application.domain.model.User;
+import com.example.application.domain.ports.in.DeleteArticleUseCase;
+import com.example.application.domain.ports.in.FavoriteArticleUseCase;
 import com.example.application.domain.ports.in.GetArticleQuery;
+import com.example.application.domain.ports.in.PublishArticleUseCase;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

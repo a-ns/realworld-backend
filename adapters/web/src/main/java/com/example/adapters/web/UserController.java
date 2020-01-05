@@ -3,8 +3,8 @@ package com.example.adapters.web;
 import com.example.adapters.web.dto.UserResponse;
 import com.example.adapters.web.dto.UserUpdateRequest;
 import com.example.adapters.web.dto.UserWebMapper;
-import com.example.application.domain.UpdateUserUseCase;
 import com.example.application.domain.model.User;
+import com.example.application.domain.ports.in.UpdateUserUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +24,7 @@ public class UserController {
 
   @PutMapping
   public ResponseEntity<UserResponse> replace(
-          @RequestBody UserUpdateRequest body, @AuthenticationPrincipal User user) {
+      @RequestBody UserUpdateRequest body, @AuthenticationPrincipal User user) {
     String currentUser = user.getUsername();
     try {
       User mapped = this.userUpdator.updateUser(currentUser, userMapper.mapResponseToUser(body));
