@@ -26,12 +26,12 @@ class ArticleService
         FindFavoriteUseCase {
 
   private SaveArticlePort saveArticlePort;
-  private FindArticlePort findArticlePort;
+  private LoadArticlePort loadArticlePort;
   private UpdateArticlePort updateArticlePort;
   private DeleteArticlePort deleteArticlePort;
   private GetProfileQuery getProfileQuery;
-  private IsFavoritedPort isFavoritedPort;
-  private ArticleFavoriteCountPort articleFavoriteCountPort;
+  private LoadFavoritedPort loadFavoritedPort;
+  private LoadArticleFavoriteCountPort loadArticleFavoriteCountPort;
   private SaveFavoritePort saveFavoritePort;
 
   @Override
@@ -40,7 +40,7 @@ class ArticleService
     assert articleToPublish.getBody() != null;
     assert articleToPublish.getDescription() != null;
     assert articleToPublish.getTitle() != null;
-    findArticlePort
+    loadArticlePort
         .findArticle(createSlug(articleToPublish.getTitle()))
         .ifPresent(
             (article) -> {
@@ -70,7 +70,7 @@ class ArticleService
         == false;
     assert !draftArticle.getTitle().isBlank();
     Article article =
-        findArticlePort
+        loadArticlePort
             .findArticleById(draftArticle.getId())
             .orElseThrow(ArticleNotFoundException::new);
 
@@ -94,7 +94,7 @@ class ArticleService
 
   @Override
   public Boolean deleteArticleBySlug(String slug) {
-    Article article = findArticlePort.findArticle(slug).orElseThrow(ArticleNotFoundException::new);
+    Article article = loadArticlePort.findArticle(slug).orElseThrow(ArticleNotFoundException::new);
     deleteArticlePort.deleteArticleById(article.getId());
     return true;
   }
@@ -103,14 +103,14 @@ class ArticleService
   public Article getArticle(String slug, Optional<User> requester) {
 
     Article article =
-        this.findArticlePort.findArticle(slug).orElseThrow(ArticleNotFoundException::new);
+        this.loadArticlePort.findArticle(slug).orElseThrow(ArticleNotFoundException::new);
 
     Profile profile = getProfileQuery.getProfile(article.getAuthor().getUsername(), requester);
     if (requester.isPresent()) {
       Boolean isFavorited =
-          this.isFavoritedPort.isArticleFavoritedBy(article.getId(), requester.get().getId());
+          this.loadFavoritedPort.isArticleFavoritedBy(article.getId(), requester.get().getId());
       article.setFavorited(isFavorited);
-      Integer favoritesCount = this.articleFavoriteCountPort.getFavoriteCount(article.getId());
+      Integer favoritesCount = this.loadArticleFavoriteCountPort.getFavoriteCount(article.getId());
       article.setFavoritesCount(favoritesCount);
     }
     article.setAuthor(profile);
@@ -149,6 +149,6 @@ class ArticleService
 
   @Override
   public Boolean hasFavorited(Integer userId, Integer articleId) {
-    return isFavoritedPort.isArticleFavoritedBy(articleId, userId);
+    return loadFavoritedPort.isArticleFavoritedBy(articleId, userId);
   }
 }

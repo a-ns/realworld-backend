@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table
-public class ArticleFavoriteJpaEntity {
+class ArticleFavoriteJpaEntity {
 
   @Id @GeneratedValue private Integer id;
   @Column private Integer userId;

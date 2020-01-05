@@ -2,8 +2,7 @@ package com.example.adapters.persistence.article;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ArticleFavoriteRepository
-    extends JpaRepository<ArticleFavoriteJpaEntity, Integer> {
+interface ArticleFavoriteRepository extends JpaRepository<ArticleFavoriteJpaEntity, Integer> {
 
   Boolean existsByArticleIdAndUserId(Integer articleId, Integer userId);
 

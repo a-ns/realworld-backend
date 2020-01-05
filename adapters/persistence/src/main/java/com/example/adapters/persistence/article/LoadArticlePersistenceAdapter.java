@@ -4,10 +4,10 @@ import com.example.adapters.persistence.user.UserJpaEntity;
 import com.example.adapters.persistence.user.UserPersistenceMapper;
 import com.example.adapters.persistence.user.UserRepository;
 import com.example.application.domain.model.Article;
-import com.example.application.domain.ports.out.ArticleFavoriteCountPort;
 import com.example.application.domain.ports.out.DeleteArticlePort;
-import com.example.application.domain.ports.out.FindArticlePort;
-import com.example.application.domain.ports.out.IsFavoritedPort;
+import com.example.application.domain.ports.out.LoadArticleFavoriteCountPort;
+import com.example.application.domain.ports.out.LoadArticlePort;
+import com.example.application.domain.ports.out.LoadFavoritedPort;
 import com.example.application.domain.ports.out.SaveArticlePort;
 import com.example.application.domain.ports.out.SaveFavoritePort;
 import com.example.application.domain.ports.out.UpdateArticlePort;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-class ArticlePersistenceAdapter
-    implements FindArticlePort,
+class LoadArticlePersistenceAdapter
+    implements LoadArticlePort,
         SaveArticlePort,
         UpdateArticlePort,
         DeleteArticlePort,
-        IsFavoritedPort,
-        ArticleFavoriteCountPort,
+        LoadFavoritedPort,
+        LoadArticleFavoriteCountPort,
         SaveFavoritePort {
 
   private ArticleRepository repository;

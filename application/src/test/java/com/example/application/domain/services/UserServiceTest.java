@@ -1,8 +1,8 @@
 package com.example.application.domain.services;
 
-import com.example.application.domain.ports.in.LoadProfilePort;
 import com.example.application.domain.ports.out.AuthPort;
 import com.example.application.domain.ports.out.GetUserPort;
+import com.example.application.domain.ports.out.LoadProfilePort;
 import com.example.application.domain.ports.out.SaveUserPort;
 import com.example.application.domain.ports.out.UpdateUserPort;
 import org.junit.jupiter.api.*;
