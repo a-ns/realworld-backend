@@ -11,7 +11,6 @@ import com.example.application.domain.model.Article;
 import com.example.application.domain.model.PublishArticleCommand;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.GetArticleQuery;
-import com.example.application.domain.ports.out.FollowUserPort;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +28,6 @@ public class ArticleController {
   private PublishArticleUseCase publishArticleUseCase;
   private FavoriteArticleUseCase favoriteArticle;
   private DeleteArticleUseCase deleteArticleUseCase;
-  private FollowUserPort followUserPort;
 
   @GetMapping
   public ResponseEntity<List<GetArticleResponse>> findArticles(

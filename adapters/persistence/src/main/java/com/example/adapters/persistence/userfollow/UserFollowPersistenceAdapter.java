@@ -4,14 +4,14 @@ import com.example.adapters.persistence.user.UserJpaEntity;
 import com.example.adapters.persistence.user.UserRepository;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
-import com.example.application.domain.ports.out.FollowUserPort;
+import com.example.application.domain.ports.out.SaveFollowRelationPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 // TODO all this code should be in (application) module
-class UserFollowPersistenceAdapter implements FollowUserPort {
+class UserFollowPersistenceAdapter implements SaveFollowRelationPort {
 
   private UserRepository userRepository;
   private UserFollowRepository followRepository;

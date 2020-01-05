@@ -11,11 +11,7 @@ import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.in.LoadProfilePort;
-import com.example.application.domain.ports.out.AuthPort;
-import com.example.application.domain.ports.out.FollowUserPort;
-import com.example.application.domain.ports.out.GetUserPort;
-import com.example.application.domain.ports.out.SaveUserPort;
-import com.example.application.domain.ports.out.UpdateUserPort;
+import com.example.application.domain.ports.out.*;
 import java.util.Optional;
 import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
@@ -34,7 +30,7 @@ class UserService
   private final SaveUserPort saveUserPort;
   private final AuthPort authService;
   private final UpdateUserPort updateUserPort;
-  private final FollowUserPort followUserPort;
+  private final SaveFollowRelationPort followUserPort;
 
   @Override
   public Profile getProfile(String username, Optional<User> request) {

@@ -2,7 +2,6 @@ package com.example.application.domain.services;
 
 import com.example.application.domain.ports.in.LoadProfilePort;
 import com.example.application.domain.ports.out.AuthPort;
-import com.example.application.domain.ports.out.FollowUserPort;
 import com.example.application.domain.ports.out.GetUserPort;
 import com.example.application.domain.ports.out.SaveUserPort;
 import com.example.application.domain.ports.out.UpdateUserPort;
@@ -21,7 +20,6 @@ public class UserServiceTest {
   @Mock private SaveUserPort saveUserPort;
   @Mock private AuthPort authService;
   @Mock private UpdateUserPort updateUserPort;
-  @Mock private FollowUserPort followUserPort;
 
   @Nested
   @DisplayName("Update user")
