@@ -23,6 +23,7 @@ class PublishArticleService implements PublishArticleUseCase {
     assert articleToPublish.getBody() != null;
     assert articleToPublish.getDescription() != null;
     assert articleToPublish.getTitle() != null;
+    assert articleToPublish.getPublisher() != null;
     loadArticlePort
         .findArticle(slugMaker.createSlug(articleToPublish.getTitle()))
         .ifPresent(
@@ -38,10 +39,10 @@ class PublishArticleService implements PublishArticleUseCase {
             .slug(slugMaker.createSlug(articleToPublish.getTitle()))
             .tags(articleToPublish.getTagList())
             .title(articleToPublish.getTitle())
+            .favorited(false)
+            .favoritesCount(0)
             .build();
     Article created = saveArticlePort.createArticle(article);
-    created.setFavoritesCount(0);
-    created.setFavorited(false);
     return created;
   }
 }
