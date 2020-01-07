@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class LoginUserService implements LoginUserUseCase {
+class LoginUserService implements LoginUserUseCase {
 
   private final AuthPort authService;
 
