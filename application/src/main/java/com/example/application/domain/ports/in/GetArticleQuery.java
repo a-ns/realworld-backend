@@ -7,7 +7,9 @@ import java.util.Optional;
 
 public interface GetArticleQuery {
 
-  Article getArticle(String slug, Optional<User> requester);
+  Article getArticle(String slug, User requester);
+
+  Article getArticle(String slug);
 
   List<Article> getRecentArticles(
       Optional<List<String>> tags,

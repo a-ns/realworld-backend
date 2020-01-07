@@ -23,7 +23,16 @@ class GetArticleQueryService implements GetArticleQuery {
   private LoadArticleFavoriteCountPort loadArticleFavoriteCountPort;
 
   @Override
-  public Article getArticle(String slug, Optional<User> requester) {
+  public Article getArticle(String slug) {
+    return this.getArticle(slug, Optional.empty());
+  }
+
+  @Override
+  public Article getArticle(String slug, User requester) {
+    return this.getArticle(slug, Optional.of(requester));
+  }
+
+  private Article getArticle(String slug, Optional<User> requester) {
 
     Article article =
         this.loadArticlePort.findArticle(slug).orElseThrow(ArticleNotFoundException::new);
@@ -33,9 +42,10 @@ class GetArticleQueryService implements GetArticleQuery {
       Boolean isFavorited =
           this.loadFavoritedPort.isArticleFavoritedBy(article.getId(), requester.get().getId());
       article.setFavorited(isFavorited);
-      Integer favoritesCount = this.loadArticleFavoriteCountPort.getFavoriteCount(article.getId());
-      article.setFavoritesCount(favoritesCount);
+    } else {
+      article.setFavorited(false);
     }
+    article.setFavoritesCount(this.loadArticleFavoriteCountPort.getFavoriteCount(article.getId()));
     article.setAuthor(profile);
     return article;
   }

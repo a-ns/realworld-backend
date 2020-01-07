@@ -52,8 +52,7 @@ public class ArticleController {
   public ResponseEntity<GetArticleResponse> findArticle(
       @AuthenticationPrincipal User user, @PathVariable String slug) {
     try {
-      Article article =
-          getArticleQuery.getArticle(slug, user == null ? Optional.empty() : Optional.of(user));
+      Article article = getArticleQuery.getArticle(slug, user);
       return ResponseEntity.ok(
           GetArticleResponse.mapArticleToArticleResponse(article, article.getAuthor()));
     } catch (ArticleNotFoundException e) {
