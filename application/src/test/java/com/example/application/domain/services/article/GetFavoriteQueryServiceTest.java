@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("GetFavoriteQueryService")
+@DisplayName("Get Favorite Query Service")
 class GetFavoriteQueryServiceTest {
 
   @InjectMocks GetFavoriteQueryService sut;

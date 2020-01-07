@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Delete Article Service")
 class DeleteArticleServiceTest {
   @InjectMocks DeleteArticleService sut;
   @Mock LoadArticlePort loadArticlePort;
