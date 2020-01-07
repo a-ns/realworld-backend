@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class EditArticleService implements EditArticleUseCase {
+class EditArticleService implements EditArticleUseCase {
 
   private LoadArticlePort loadArticlePort;
   private UpdateArticlePort updateArticlePort;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class DeleteArticleService implements DeleteArticleUseCase {
+class DeleteArticleService implements DeleteArticleUseCase {
 
   private final LoadArticlePort loadArticlePort;
   private final DeleteArticlePort deleteArticlePort;

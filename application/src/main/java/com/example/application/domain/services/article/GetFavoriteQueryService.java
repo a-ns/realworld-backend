@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class GetFavoriteQueryService implements GetFavoriteQuery {
+class GetFavoriteQueryService implements GetFavoriteQuery {
 
   private LoadFavoritedPort loadFavoritedPort;
 

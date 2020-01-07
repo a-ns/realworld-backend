@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class PublishArticleService implements PublishArticleUseCase {
+class PublishArticleService implements PublishArticleUseCase {
   private final LoadArticlePort loadArticlePort;
   private final SaveArticlePort saveArticlePort;
   private final SlugMaker slugMaker;

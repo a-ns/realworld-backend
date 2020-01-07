@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class GetArticleQueryService implements GetArticleQuery {
+class GetArticleQueryService implements GetArticleQuery {
 
   private LoadArticlePort loadArticlePort;
   private GetProfileQuery getProfileQuery;
