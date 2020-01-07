@@ -23,13 +23,17 @@ class FavoriteArticleService implements FavoriteArticleUseCase {
       return this.getArticleQuery.getArticle(slug, requester);
     }
     this.saveFavoritePort.addFavorite(found.getId(), requester.getId());
-    return this.getArticleQuery.getArticle(slug, requester);
+    found.setFavoritesCount(found.getFavoritesCount() + 1);
+    found.setFavorited(true);
+    return found;
   }
 
   @Override
   public Article unfavoriteArticle(String slug, User requester) {
     Article found = this.getArticleQuery.getArticle(slug, requester);
     this.saveFavoritePort.removeFavorite(found.getId(), requester.getId());
-    return this.getArticleQuery.getArticle(slug, requester);
+    found.setFavorited(false);
+    found.setFavoritesCount(found.getFavoritesCount() - 1);
+    return found;
   }
 }
