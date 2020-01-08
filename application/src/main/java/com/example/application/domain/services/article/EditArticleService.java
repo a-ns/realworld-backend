@@ -1,5 +1,6 @@
 package com.example.application.domain.services.article;
 
+import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.EditArticleCommand;
@@ -13,17 +14,16 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 class EditArticleService implements EditArticleUseCase {
 
-  private LoadArticlePort loadArticlePort;
-  private UpdateArticlePort updateArticlePort;
-  private SlugMaker slugMaker;
+  private final LoadArticlePort loadArticlePort;
+  private final UpdateArticlePort updateArticlePort;
+  private final SlugMaker slugMaker;
 
   @Override
   public Article editArticle(EditArticleCommand draftArticle) {
-    assert (draftArticle.getBody() != null
-            && draftArticle.getDescription() != null
-            && draftArticle.getTitle() != null)
-        == false;
-    assert !draftArticle.getTitle().isBlank();
+    assert draftArticle.getBody() != null;
+    assert draftArticle.getDescription() != null;
+    assert draftArticle.getTitle() != null;
+
     Article article =
         this.loadArticlePort
             .findArticleById(draftArticle.getId())
@@ -31,7 +31,14 @@ class EditArticleService implements EditArticleUseCase {
 
     if (!"".equals(draftArticle.getTitle())) {
       article.setTitle(draftArticle.getTitle());
-      article.setSlug(this.slugMaker.createSlug(draftArticle.getTitle()));
+      String newSlug = this.slugMaker.createSlug(draftArticle.getTitle());
+      loadArticlePort
+          .findArticle(newSlug)
+          .ifPresent(
+              (collision) -> {
+                throw new ArticleAlreadyExistsException();
+              });
+      article.setSlug(newSlug);
     }
     if (!"".equals(draftArticle.getDescription())) {
       article.setDescription(draftArticle.getDescription());
