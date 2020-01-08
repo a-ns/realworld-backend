@@ -15,7 +15,7 @@ class GetProfileQueryService implements GetProfileQuery {
 
   @Override
   public Profile getProfile(String username, Optional<User> request) {
-    Boolean isFollowing = profilePort.isFollowing(username, request.orElse(null));
+    Boolean isFollowing = profilePort.isFollowing(username, request);
     Profile p = profilePort.loadProfile(username);
     p.setFollowing(isFollowing);
     return p;

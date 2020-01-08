@@ -1,5 +1,6 @@
 package com.example.application.domain.services.userprofile;
 
+import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.LoginUserUseCase;
 import com.example.application.domain.ports.out.AuthPort;
@@ -18,13 +19,13 @@ class LoginUserService implements LoginUserUseCase {
   private final GetUserPort getUserPort;
 
   public User login(String email, String password) throws FailedLoginException {
+    User user = this.getUserPort.getUserByEmail(email).orElseThrow(UserNotFoundException::new);
     String token;
     try {
       token = this.authService.login(email, password);
     } catch (LoginException e) {
       throw new FailedLoginException();
     }
-    User user = this.getUserPort.getUserByEmail(email).orElseThrow(FailedLoginException::new);
     user.setToken(token);
     return user;
   }

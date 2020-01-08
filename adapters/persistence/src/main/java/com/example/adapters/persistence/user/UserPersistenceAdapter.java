@@ -71,10 +71,10 @@ class UserPersistenceAdapter implements GetUserPort, SaveUserPort, UpdateUserPor
   }
 
   @Override
-  public Boolean isFollowing(String username, User follower) {
-    if (follower == null) return false;
+  public Boolean isFollowing(String username, Optional<User> follower) {
+    if (follower.isEmpty()) return false;
     Integer followedId = this.repository.findByUsername(username).getId();
-    Integer followerId = this.repository.findByUsername(follower.getUsername()).getId();
+    Integer followerId = this.repository.findByUsername(follower.get().getUsername()).getId();
     return this.followRepository.existsByFollowerAndFollowed(followerId, followedId);
   }
 }
