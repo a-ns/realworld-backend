@@ -2,9 +2,9 @@ package com.example.application.domain.services.userprofile;
 
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
 import com.example.application.domain.exceptions.ExistingUserFoundException;
-import com.example.application.domain.exceptions.RegistrationValidationException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.User;
+import com.example.application.domain.model.UserRegistrationCommand;
 import com.example.application.domain.ports.in.RegisterUserUseCase;
 import com.example.application.domain.ports.out.AuthPort;
 import com.example.application.domain.ports.out.GetUserPort;
@@ -19,35 +19,27 @@ class RegisterUserService implements RegisterUserUseCase {
   private final AuthPort authService;
   private final GetUserPort getUserPort;
   private final SaveUserPort saveUserPort;
+  private final UserRegistrationValidator validator;
 
-  private static final Integer PASSWORD_MIN_LENGTH = 5;
-
-  public User registerUser(String username, String email, String password)
-      throws ExistingUserFoundException {
-    if (username == null
-        || email == null
-        || password == null
-        || username.isBlank()
-        || email.isBlank()
-        || password.isBlank()
-        || password.length() < PASSWORD_MIN_LENGTH) throw new RegistrationValidationException();
+  public User registerUser(UserRegistrationCommand registrant) throws ExistingUserFoundException {
+    this.validator.validate(registrant);
     this.getUserPort
-        .getUserByUsername(username)
+        .getUserByUsername(registrant.getUsername())
         .ifPresent(
             (existing) -> {
               throw new UsernameAlreadyTakenException();
             });
     this.getUserPort
-        .getUserByEmail(email)
+        .getUserByEmail(registrant.getEmail())
         .ifPresent(
             (existing) -> {
               throw new EmailAreadyTakenException();
             });
     User user =
         User.builder()
-            .username(username)
-            .email(email)
-            .password(authService.encrypt(password))
+            .username(registrant.getUsername())
+            .email(registrant.getEmail())
+            .password(authService.encrypt(registrant.getPassword()))
             .build();
     user = this.saveUserPort.saveUser(user);
     String token = this.authService.generateToken(user);
