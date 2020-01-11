@@ -45,10 +45,14 @@ class UserPersistenceAdapter implements GetUserPort, SaveUserPort, UpdateUserPor
   }
 
   @Override
-  public User registerUser(String username, String email, String password) {
-    UserJpaEntity user =
-        UserJpaEntity.builder().email(email).password(password).username(username).build();
-    return mapper.mapJpaEntityToDomain(repository.save(user));
+  public User saveUser(User user /* String username, String email, String password */) {
+    UserJpaEntity saved =
+        UserJpaEntity.builder()
+            .email(user.getEmail())
+            .password(user.getPassword())
+            .username(user.getUsername())
+            .build();
+    return mapper.mapJpaEntityToDomain(repository.save(saved));
   }
 
   @Override
