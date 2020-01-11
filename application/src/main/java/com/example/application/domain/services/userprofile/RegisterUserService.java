@@ -4,7 +4,6 @@ import com.example.application.domain.exceptions.EmailAreadyTakenException;
 import com.example.application.domain.exceptions.ExistingUserFoundException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.User;
-import com.example.application.domain.model.UserRegistrationCommand;
 import com.example.application.domain.ports.in.RegisterUserUseCase;
 import com.example.application.domain.ports.out.AuthPort;
 import com.example.application.domain.ports.out.GetUserPort;
@@ -19,10 +18,8 @@ class RegisterUserService implements RegisterUserUseCase {
   private final AuthPort authService;
   private final GetUserPort getUserPort;
   private final SaveUserPort saveUserPort;
-  private final UserRegistrationValidator validator;
 
   public User registerUser(UserRegistrationCommand registrant) throws ExistingUserFoundException {
-    this.validator.validate(registrant);
     this.getUserPort
         .getUserByUsername(registrant.getUsername())
         .ifPresent(

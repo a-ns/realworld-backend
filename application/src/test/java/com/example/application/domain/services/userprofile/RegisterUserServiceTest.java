@@ -1,16 +1,14 @@
 package com.example.application.domain.services.userprofile;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
-import com.example.application.domain.exceptions.RegistrationValidationException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.User;
-import com.example.application.domain.model.UserRegistrationCommand;
+import com.example.application.domain.ports.in.RegisterUserUseCase;
 import com.example.application.domain.ports.out.AuthPort;
 import com.example.application.domain.ports.out.GetUserPort;
 import com.example.application.domain.ports.out.SaveUserPort;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +25,6 @@ class RegisterUserServiceTest {
   @Mock GetUserPort getUserPort;
   @Mock AuthPort authService;
   @Mock SaveUserPort saveUserPort;
-  @Mock UserRegistrationValidator validator;
 
   @Test
   @DisplayName("a user is registered")
@@ -42,12 +39,8 @@ class RegisterUserServiceTest {
     User user = User.builder().password(encrypted_password).email(email).username(username).build();
     User userWithId =
         User.builder().password(encrypted_password).email(email).username(username).id(id).build();
-    UserRegistrationCommand registrant =
-        UserRegistrationCommand.builder()
-            .email(email)
-            .password(password)
-            .username(username)
-            .build();
+    RegisterUserUseCase.UserRegistrationCommand registrant =
+        new RegisterUserUseCase.UserRegistrationCommand(username, email, password);
     Mockito.when(getUserPort.getUserByUsername(username)).thenReturn(Optional.empty());
     Mockito.when(getUserPort.getUserByEmail(email)).thenReturn(Optional.empty());
     Mockito.when(authService.encrypt(password)).thenReturn(encrypted_password);
@@ -88,11 +81,7 @@ class RegisterUserServiceTest {
         UsernameAlreadyTakenException.class,
         () ->
             sut.registerUser(
-                UserRegistrationCommand.builder()
-                    .email(email)
-                    .password(password)
-                    .username(username)
-                    .build()));
+                new RegisterUserUseCase.UserRegistrationCommand(username, email, password)));
     Mockito.verifyNoInteractions(this.saveUserPort);
   }
 
@@ -105,7 +94,6 @@ class RegisterUserServiceTest {
     String password = "password";
     String encrypted_password = "encrypted_password";
     Integer id = 1234;
-    String token = "abc123";
     User foundUser =
         User.builder().password(encrypted_password).email(email).username(username).id(id).build();
     Mockito.when(getUserPort.getUserByUsername(username)).thenReturn(Optional.empty());
@@ -115,11 +103,7 @@ class RegisterUserServiceTest {
         EmailAreadyTakenException.class,
         () ->
             sut.registerUser(
-                UserRegistrationCommand.builder()
-                    .email(email)
-                    .password(password)
-                    .username(username)
-                    .build()));
+                new RegisterUserUseCase.UserRegistrationCommand(username, email, password)));
     Mockito.verifyNoInteractions(this.saveUserPort);
   }
 
@@ -129,22 +113,11 @@ class RegisterUserServiceTest {
     // Arrange
     String username = "bob";
     String email = "hello@world.com";
-    String password = "password";
-    String encrypted_password = "encrypted_password";
-    Integer id = 1234;
-    String token = "abc123";
-    User foundUser =
-        User.builder().password(encrypted_password).email(email).username(username).id(id).build();
-    UserRegistrationCommand registrant =
-        UserRegistrationCommand.builder()
-            .email(email)
-            .password(password)
-            .username(username)
-            .build();
-    Mockito.doThrow(RegistrationValidationException.class).when(validator).validate(registrant);
+    String password = null;
     // Act
-    Assertions.assertThrows(
-        RegistrationValidationException.class, () -> sut.registerUser(registrant));
-    Mockito.verifyNoInteractions(this.saveUserPort);
+    ConstraintViolationException actual =
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> new RegisterUserUseCase.UserRegistrationCommand(username, email, password));
   }
 }

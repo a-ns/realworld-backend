@@ -6,7 +6,6 @@ import com.example.adapters.web.dto.UserResponse;
 import com.example.adapters.web.dto.UserWebMapper;
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
-import com.example.application.domain.model.UserRegistrationCommand;
 import com.example.application.domain.ports.in.LoginUserUseCase;
 import com.example.application.domain.ports.in.RegisterUserUseCase;
 import javax.security.auth.login.LoginException;
@@ -33,11 +32,10 @@ public class UsersController {
       return ResponseEntity.ok(
           userMapper.mapUserToResponse(
               this.registerUserUseCase.registerUser(
-                  UserRegistrationCommand.builder()
-                      .email(body.getUser().getEmail())
-                      .password(body.getUser().getPassword())
-                      .username(body.getUser().getUsername())
-                      .build())));
+                  new RegisterUserUseCase.UserRegistrationCommand(
+                      body.getUser().getUsername(),
+                      body.getUser().getEmail(),
+                      body.getUser().getPassword()))));
     } catch (EmailAreadyTakenException | UsernameAlreadyTakenException e) {
       return ResponseEntity.status(204).build();
     }
