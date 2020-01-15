@@ -5,7 +5,6 @@ import com.example.adapters.web.dto.GetArticleResponse;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
-import com.example.application.domain.model.PublishArticleCommand;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.DeleteArticleUseCase;
 import com.example.application.domain.ports.in.FavoriteArticleUseCase;
@@ -67,7 +66,7 @@ public class ArticleController {
       DraftArticle.Body draft = draftArticle.getArticle();
       Article article =
           publishArticleUseCase.publishArticle(
-              PublishArticleCommand.builder()
+              PublishArticleUseCase.PublishArticleCommand.builder()
                   .body(draft.getBody())
                   .description(draft.getDescription())
                   .publisher(user)

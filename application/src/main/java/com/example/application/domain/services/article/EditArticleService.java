@@ -3,7 +3,6 @@ package com.example.application.domain.services.article;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
-import com.example.application.domain.model.EditArticleCommand;
 import com.example.application.domain.ports.in.EditArticleUseCase;
 import com.example.application.domain.ports.out.LoadArticlePort;
 import com.example.application.domain.ports.out.UpdateArticlePort;

@@ -1,12 +1,10 @@
 package com.example.application.domain.services.article;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Profile;
-import com.example.application.domain.model.PublishArticleCommand;
 import com.example.application.domain.model.User;
+import com.example.application.domain.ports.in.PublishArticleUseCase;
 import com.example.application.domain.ports.out.LoadArticlePort;
 import com.example.application.domain.ports.out.SaveArticlePort;
 import java.util.Optional;
@@ -34,8 +32,8 @@ class PublishArticleServiceTest {
   void publishes_article() {
     // Arrange
     User publisher = User.builder().username("user1").build();
-    PublishArticleCommand command =
-        new PublishArticleCommand("title", "description", "body", publisher);
+    PublishArticleUseCase.PublishArticleCommand command =
+        new PublishArticleUseCase.PublishArticleCommand("title", "description", "body", publisher);
     Mockito.when(slugMaker.createSlug("title")).thenReturn("title");
     Mockito.when(loadArticlePort.findArticle("title")).thenReturn(Optional.empty());
     Profile author = Profile.builder().username("user1").build();
@@ -63,7 +61,8 @@ class PublishArticleServiceTest {
   @Test
   void body_required() {
     // Arrange
-    PublishArticleCommand command = new PublishArticleCommand();
+    PublishArticleUseCase.PublishArticleCommand command =
+        new PublishArticleUseCase.PublishArticleCommand();
     // Act
     Assertions.assertThrows(AssertionError.class, () -> this.sut.publishArticle(command));
   }
@@ -72,7 +71,8 @@ class PublishArticleServiceTest {
   @Test
   void description_required() {
     // Arrange
-    PublishArticleCommand command = new PublishArticleCommand();
+    PublishArticleUseCase.PublishArticleCommand command =
+        new PublishArticleUseCase.PublishArticleCommand();
     command.setBody("body");
     // Act
     Assertions.assertThrows(AssertionError.class, () -> this.sut.publishArticle(command));
@@ -82,7 +82,8 @@ class PublishArticleServiceTest {
   @Test
   void title_required() {
     // Arrange
-    PublishArticleCommand command = new PublishArticleCommand();
+    PublishArticleUseCase.PublishArticleCommand command =
+        new PublishArticleUseCase.PublishArticleCommand();
     command.setBody("body");
     command.setDescription("description");
     // Act
@@ -93,7 +94,8 @@ class PublishArticleServiceTest {
   @Test
   void author_required() {
     // Arrange
-    PublishArticleCommand command = new PublishArticleCommand();
+    PublishArticleUseCase.PublishArticleCommand command =
+        new PublishArticleUseCase.PublishArticleCommand();
     command.setBody("body");
     command.setDescription("description");
     command.setTitle("title");
@@ -107,8 +109,8 @@ class PublishArticleServiceTest {
 
     // Arrange
     User publisher = User.builder().username("user1").build();
-    PublishArticleCommand command =
-        new PublishArticleCommand("title", "description", "body", publisher);
+    PublishArticleUseCase.PublishArticleCommand command =
+        new PublishArticleUseCase.PublishArticleCommand("title", "description", "body", publisher);
     Mockito.when(slugMaker.createSlug("title")).thenReturn("title");
 
     Profile author = Profile.builder().username("user1").build();

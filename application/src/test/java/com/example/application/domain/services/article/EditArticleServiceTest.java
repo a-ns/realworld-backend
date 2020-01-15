@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
-import com.example.application.domain.model.EditArticleCommand;
+import com.example.application.domain.ports.in.EditArticleUseCase;
 import com.example.application.domain.ports.out.LoadArticlePort;
 import com.example.application.domain.ports.out.UpdateArticlePort;
 import java.util.Optional;
@@ -34,8 +34,8 @@ class EditArticleServiceTest {
   void update_article() {
     // Arrange
     Integer articleId = 1234;
-    EditArticleCommand payload =
-        EditArticleCommand.builder()
+    EditArticleUseCase.EditArticleCommand payload =
+        EditArticleUseCase.EditArticleCommand.builder()
             .body("new body")
             .id(articleId)
             .description("new description")
@@ -67,8 +67,8 @@ class EditArticleServiceTest {
   void update_article_must_exist() {
     // Arrange
     Integer articleId = 1234;
-    EditArticleCommand payload =
-        EditArticleCommand.builder()
+    EditArticleUseCase.EditArticleCommand payload =
+        EditArticleUseCase.EditArticleCommand.builder()
             .body("new body")
             .id(articleId)
             .description("new description")
