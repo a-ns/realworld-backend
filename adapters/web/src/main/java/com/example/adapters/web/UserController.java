@@ -25,9 +25,17 @@ public class UserController {
   @PutMapping
   public ResponseEntity<UserResponse> replace(
       @RequestBody UserUpdateRequest body, @AuthenticationPrincipal User user) {
-    String currentUser = user.getUsername();
     try {
-      User mapped = this.userUpdator.updateUser(currentUser, userMapper.mapResponseToUser(body));
+      UpdateUserUseCase.UpdateUserCommand payload =
+          UpdateUserUseCase.UpdateUserCommand.builder()
+              .bio(body.getUser().getBio())
+              .email(body.getUser().getEmail())
+              .image(body.getUser().getImage())
+              .password(body.getUser().getPassword())
+              .user(user.getId())
+              .username(body.getUser().getUsername())
+              .build();
+      User mapped = this.userUpdator.updateUser(payload);
       mapped.setToken(auth.generateToken(mapped));
       return ResponseEntity.ok(userMapper.mapUserToResponse(mapped));
     } catch (Exception e) {

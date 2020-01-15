@@ -45,6 +45,19 @@ class UserPersistenceAdapter implements GetUserPort, SaveUserPort, UpdateUserPor
   }
 
   @Override
+  public Optional<User> getUserById(Integer userId) {
+    try {
+      Optional<UserJpaEntity> user = repository.findById(userId);
+      if (user.isEmpty()) {
+        return Optional.empty();
+      }
+      return Optional.of(this.mapper.mapJpaEntityToDomain(user.get()));
+    } catch (EntityNotFoundException e) {
+      return Optional.empty();
+    }
+  }
+
+  @Override
   public User saveUser(User user /* String username, String email, String password */) {
     UserJpaEntity saved =
         UserJpaEntity.builder()
@@ -56,10 +69,8 @@ class UserPersistenceAdapter implements GetUserPort, SaveUserPort, UpdateUserPor
   }
 
   @Override
-  public User save(Integer userId, User payload) {
-    UserJpaEntity found = this.repository.findById(userId).get();
+  public User save(User payload) {
     UserJpaEntity mapped = mapper.mapDomainToJpaEntity(payload);
-    mapped.setId(found.getId());
     return mapper.mapJpaEntityToDomain(repository.save(mapped));
   }
 

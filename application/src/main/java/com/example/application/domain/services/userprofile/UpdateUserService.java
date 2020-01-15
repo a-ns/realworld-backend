@@ -36,10 +36,12 @@ class UpdateUserService implements UpdateUserUseCase {
     }
   }
 
-  public User updateUser(String previousUsername, User updatePayload) {
-
+  public User updateUser(UpdateUserCommand updatePayload) {
+    if (updatePayload == null) {
+      throw new UserNotFoundException();
+    }
     User existing =
-        getUserPort.getUserByUsername(previousUsername).orElseThrow(UserNotFoundException::new);
+        getUserPort.getUserById(updatePayload.getUser()).orElseThrow(UserNotFoundException::new);
 
     if (updatePayload.getUsername() != null && !updatePayload.getUsername().isBlank()) {
 
@@ -59,14 +61,14 @@ class UpdateUserService implements UpdateUserUseCase {
     if (updatePayload.getPassword() != null && !updatePayload.getPassword().isBlank()) {
       existing.setPassword(authService.encrypt(updatePayload.getPassword()));
     }
-    if (!"".equals(updatePayload.getImage())) {
+    if (updatePayload.getImage() != null && !"".equals(updatePayload.getImage())) {
       existing.setImage(updatePayload.getImage());
     }
     if (updatePayload.getBio() != null) {
       existing.setBio(updatePayload.getBio());
     }
 
-    return this.updateUserPort.save(existing.getId(), existing);
+    return this.updateUserPort.save(existing);
   }
 
   private Boolean isValidEmail(String email) {

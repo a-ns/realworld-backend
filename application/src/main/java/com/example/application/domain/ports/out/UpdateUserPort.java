@@ -4,5 +4,5 @@ import com.example.application.domain.model.User;
 
 public interface UpdateUserPort {
 
-  User save(Integer userId, User payload);
+  User save(User payload);
 }
