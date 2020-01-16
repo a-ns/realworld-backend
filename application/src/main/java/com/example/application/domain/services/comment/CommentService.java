@@ -1,4 +1,4 @@
-package com.example.application.domain.services;
+package com.example.application.domain.services.comment;
 
 import com.example.application.domain.model.Comment;
 import lombok.AllArgsConstructor;
