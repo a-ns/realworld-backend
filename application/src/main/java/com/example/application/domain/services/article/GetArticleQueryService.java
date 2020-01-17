@@ -7,9 +7,7 @@ import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.GetArticleQuery;
 import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.out.*;
-
 import java.util.*;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -55,20 +53,22 @@ class GetArticleQueryService implements GetArticleQuery {
       Optional<User> user) {
     Integer DEFAULT_LIMIT = 20;
     Integer DEFAULT_OFFSET = 0;
-    Collection<Article> articles = this.loadRecentArticlesPort.loadRecentArticles(tag, author, favorited, limit.orElse(DEFAULT_LIMIT), offset.orElse(DEFAULT_OFFSET));
+    Collection<Article> articles =
+        this.loadRecentArticlesPort.loadRecentArticles(
+            tag, author, favorited, limit.orElse(DEFAULT_LIMIT), offset.orElse(DEFAULT_OFFSET));
     fillArticleFavoriteInfo(articles, user);
 
     return new ArrayList<>(articles);
   }
 
   private void fillArticleFavoriteInfo(Article article, Optional<User> user) {
-    if(user.isPresent())
-      article.setFavorited(loadArticleFavoritedPort.isArticleFavoritedBy(article.getId(), user.get().getId()));
+    if (user.isPresent())
+      article.setFavorited(
+          loadArticleFavoritedPort.isArticleFavoritedBy(article.getId(), user.get().getId()));
     else article.setFavorited(false);
   }
 
   private void fillArticleFavoriteInfo(Collection<Article> articles, Optional<User> user) {
     articles.forEach(article -> fillArticleFavoriteInfo(article, user));
   }
-
 }

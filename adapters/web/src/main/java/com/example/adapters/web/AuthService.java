@@ -1,12 +1,11 @@
 package com.example.adapters.web;
 
+import com.example.adapters.web.jwt.JwtService;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.User;
-import com.example.application.domain.ports.out.GetUserPort;
 import com.example.application.domain.ports.out.AuthPort;
-import com.example.adapters.web.jwt.JwtService;
+import com.example.application.domain.ports.out.GetUserPort;
 import javax.security.auth.login.LoginException;
-
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

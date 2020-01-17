@@ -15,8 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class GetFavoriteQueryServiceTest {
 
   @InjectMocks GetFavoriteQueryService sut;
-  @Mock
-  LoadArticleFavoritedPort loadArticleFavoritedPort;
+  @Mock LoadArticleFavoritedPort loadArticleFavoritedPort;
 
   @DisplayName("returns true if the user has favorited the article")
   @Test

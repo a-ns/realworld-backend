@@ -10,17 +10,15 @@ import org.springframework.lang.NonNull;
 
 public interface CommentOnArticleUseCase {
 
-    Comment publishComment(PublishCommentCommand input) throws UserNotFoundException, ArticleNotFoundException;
+  Comment publishComment(PublishCommentCommand input)
+      throws UserNotFoundException, ArticleNotFoundException;
 
-    @Data
-    @Builder
-    class PublishCommentCommand {
+  @Data
+  @Builder
+  class PublishCommentCommand {
 
-        @NonNull
-        private String body;
-        @NonNull
-        private String articleSlug;
-        @NonNull
-        private User commentAuthor;
-    }
+    @NonNull private String body;
+    @NonNull private String articleSlug;
+    @NonNull private User commentAuthor;
+  }
 }

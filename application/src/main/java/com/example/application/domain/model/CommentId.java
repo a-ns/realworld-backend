@@ -1,12 +1,11 @@
 package com.example.application.domain.model;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 @Builder
 public class CommentId {
-    private UUID id;
+  private UUID id;
 }

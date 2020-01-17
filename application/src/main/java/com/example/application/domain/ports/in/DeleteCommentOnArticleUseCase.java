@@ -8,16 +8,16 @@ import com.example.application.domain.model.User;
 import lombok.Builder;
 import lombok.Data;
 
-
 public interface DeleteCommentOnArticleUseCase {
 
-    Comment delete(DeleteCommentCommand input) throws CommentNotFoundException, ArticleNotFoundException;
+  Comment delete(DeleteCommentCommand input)
+      throws CommentNotFoundException, ArticleNotFoundException;
 
-    @Data
-    @Builder
-    class DeleteCommentCommand {
-        CommentId commentId;
-        String slug;
-        User requester;
-    }
+  @Data
+  @Builder
+  class DeleteCommentCommand {
+    CommentId commentId;
+    String slug;
+    User requester;
+  }
 }

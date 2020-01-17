@@ -5,5 +5,5 @@ import com.example.application.domain.model.CommentId;
 
 public interface DeleteCommentPort {
 
-    Comment delete(CommentId input);
+  Comment delete(CommentId input);
 }

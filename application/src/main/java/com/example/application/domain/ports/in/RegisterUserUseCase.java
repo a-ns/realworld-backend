@@ -9,7 +9,8 @@ import lombok.Value;
 
 public interface RegisterUserUseCase {
 
-  User registerUser(UserRegistrationCommand registrant) throws UsernameAlreadyTakenException, EmailAreadyTakenException;
+  User registerUser(UserRegistrationCommand registrant)
+      throws UsernameAlreadyTakenException, EmailAreadyTakenException;
 
   @Value
   class UserRegistrationCommand extends SelfValidating<UserRegistrationCommand> {

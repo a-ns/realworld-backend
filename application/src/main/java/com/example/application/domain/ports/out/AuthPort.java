@@ -1,7 +1,6 @@
 package com.example.application.domain.ports.out;
 
 import com.example.application.domain.model.User;
-
 import javax.security.auth.login.LoginException;
 
 public interface AuthPort {

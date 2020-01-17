@@ -1,7 +1,6 @@
 package com.example.application.domain.services.comment;
 
 import com.example.application.domain.exceptions.CommentNotFoundException;
-import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Comment;
 import com.example.application.domain.ports.in.DeleteCommentOnArticleUseCase;
 import com.example.application.domain.ports.in.GetArticleQuery;
@@ -14,17 +13,20 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 class DeleteCommentOnArticleService implements DeleteCommentOnArticleUseCase {
 
+  private LoadCommentPort loadCommentPort;
+  private GetArticleQuery getArticleQuery;
+  private DeleteCommentPort deleteCommentPort;
 
-    private LoadCommentPort loadCommentPort;
-    private GetArticleQuery getArticleQuery;
-    private DeleteCommentPort deleteCommentPort;
-    @Override
-    public Comment delete(DeleteCommentCommand input) {
+  @Override
+  public Comment delete(DeleteCommentCommand input) {
 
-        Comment existingComment = this.loadCommentPort.getComment(input.getCommentId()).orElseThrow(CommentNotFoundException::new);
-        this.getArticleQuery.getArticle(input.getSlug(), input.getRequester());
+    Comment existingComment =
+        this.loadCommentPort
+            .getComment(input.getCommentId())
+            .orElseThrow(CommentNotFoundException::new);
+    this.getArticleQuery.getArticle(input.getSlug(), input.getRequester());
 
-        this.deleteCommentPort.delete(input.getCommentId());
-        return existingComment;
-    }
+    this.deleteCommentPort.delete(input.getCommentId());
+    return existingComment;
+  }
 }

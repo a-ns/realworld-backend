@@ -1,4 +1,3 @@
 package com.example.application.domain.exceptions;
 
-public class CommentNotFoundException extends RuntimeException {
-}
+public class CommentNotFoundException extends RuntimeException {}

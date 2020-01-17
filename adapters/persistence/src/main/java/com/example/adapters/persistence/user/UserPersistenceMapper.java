@@ -12,7 +12,7 @@ public class UserPersistenceMapper {
         .image(user.getImage())
         .password(user.getPassword())
         .username(user.getUsername())
-            .id(user.getId())
+        .id(user.getId())
         .build();
   }
 
@@ -23,7 +23,7 @@ public class UserPersistenceMapper {
         .image(user.getImage())
         .password(user.getPassword())
         .username(user.getUsername())
-            .id(user.getId())
+        .id(user.getId())
         .build();
   }
 }

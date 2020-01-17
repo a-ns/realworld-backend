@@ -44,8 +44,7 @@ public class ArticleController {
                 Optional.ofNullable(favorited),
                 Optional.ofNullable(limit),
                 Optional.ofNullable(offset),
-                    Optional.ofNullable(user)
-               )
+                Optional.ofNullable(user))
             .stream()
             .map(
                 article ->

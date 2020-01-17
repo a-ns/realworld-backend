@@ -1,11 +1,9 @@
 package com.example.adapters.persistence.user;
 
-import javax.persistence.*;
-
 import com.example.adapters.persistence.article.ArticleJpaEntity;
-import lombok.*;
-
 import java.util.List;
+import javax.persistence.*;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
