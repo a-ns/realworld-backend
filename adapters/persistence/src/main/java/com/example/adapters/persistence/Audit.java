@@ -1,6 +1,6 @@
 package com.example.adapters.persistence;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -16,10 +16,10 @@ public abstract class Audit {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at", nullable = false, updatable = false)
   @CreationTimestamp
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated_at", nullable = false)
   @UpdateTimestamp
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 }

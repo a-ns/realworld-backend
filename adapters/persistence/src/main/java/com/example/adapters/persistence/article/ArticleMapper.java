@@ -3,7 +3,6 @@ package com.example.adapters.persistence.article;
 import com.example.adapters.persistence.tag.TagJpaEntity;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Profile;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -30,8 +29,8 @@ class ArticleMapper {
         .id(jpa.getId())
         .favorited(false)
         .favoritesCount(favoritesCount)
-        .createdAt(jpa.getCreatedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
-        .updatedAt(jpa.getUpdatedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+        .createdAt(jpa.getCreatedAt())
+        .updatedAt(jpa.getUpdatedAt())
         .build();
   }
 

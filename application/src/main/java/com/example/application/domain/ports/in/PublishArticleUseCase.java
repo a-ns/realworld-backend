@@ -12,8 +12,8 @@ public interface PublishArticleUseCase {
   Article publishArticle(PublishArticleCommand article) throws ArticleAlreadyExistsException;
 
   @Data
-  @Builder
   @NoArgsConstructor
+  @Builder
   @AllArgsConstructor
   @RequiredArgsConstructor
   class PublishArticleCommand {
