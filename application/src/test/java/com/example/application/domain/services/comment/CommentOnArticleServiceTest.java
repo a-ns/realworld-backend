@@ -1,5 +1,6 @@
 package com.example.application.domain.services.comment;
 
+import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Comment;
 import com.example.application.domain.model.Profile;
@@ -52,5 +53,17 @@ class CommentOnArticleServiceTest {
         Assertions.assertEquals(author, actual.getAuthor().getUsername());
         Assertions.assertEquals(body, actual.getBody());
         Assertions.assertFalse(actual.getId().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Comments can only be craeted for articles that exist")
+    void comments_only_created_for_article_that_exist(){
+        // Arrange
+        var article = "article-slug";
+        var input = CommentOnArticleUseCase.PublishCommentCommand.builder().body("fake body").commentAuthor(User.builder().build()).articleSlug(article).build();
+        Mockito.when(this.loadProfileQuery.getProfile(Mockito.any(), Mockito.any())).thenReturn(null);
+        Mockito.when(this.loadArticlePort.findArticle(article)).thenReturn(Optional.empty());
+        // Act & Assert
+        Assertions.assertThrows(ArticleNotFoundException.class, () -> sut.publishComment(input));
     }
 }

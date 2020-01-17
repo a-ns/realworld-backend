@@ -23,6 +23,7 @@ class CommentOnArticleService implements CommentOnArticleUseCase {
     private LoadArticlePort loadArticlePort;
     @Override
     public Comment publishComment(PublishCommentCommand input) {
+
         Profile author = getProfileQuery.getProfile(input.getCommentAuthor().getUsername(), Optional.empty());
         Article article = loadArticlePort.findArticle(input.getArticleSlug()).orElseThrow(ArticleNotFoundException::new);
         Comment newComment = Comment.builder().body(input.getBody()).author(author).id(UUID.randomUUID().toString()).articleId(article.getId()).build();

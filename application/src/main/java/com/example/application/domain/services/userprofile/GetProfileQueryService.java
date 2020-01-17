@@ -1,5 +1,6 @@
 package com.example.application.domain.services.userprofile;
 
+import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.GetProfileQuery;
@@ -16,7 +17,7 @@ class GetProfileQueryService implements GetProfileQuery {
   @Override
   public Profile getProfile(String username, Optional<User> request) {
     Boolean isFollowing = profilePort.isFollowing(username, request);
-    Profile p = profilePort.loadProfile(username);
+    Profile p = profilePort.loadProfile(username).orElseThrow(UserNotFoundException::new);
     p.setFollowing(isFollowing);
     return p;
   }

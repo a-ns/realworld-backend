@@ -5,7 +5,7 @@ import com.example.application.domain.model.User;
 import java.util.Optional;
 
 public interface LoadProfilePort {
-  Profile loadProfile(String username);
+  Optional<Profile> loadProfile(String username);
 
   Boolean isFollowing(String username, Optional<User> follower);
 }

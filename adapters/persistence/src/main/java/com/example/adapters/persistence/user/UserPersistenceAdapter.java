@@ -75,14 +75,17 @@ class UserPersistenceAdapter implements GetUserPort, SaveUserPort, UpdateUserPor
   }
 
   @Override
-  public Profile loadProfile(String username) {
+  public Optional<Profile> loadProfile(String username) {
     UserJpaEntity user = repository.findByUsername(username);
-    return Profile.builder()
+    if(user == null) {
+      return Optional.empty();
+    }
+    return Optional.of(Profile.builder()
         .image(user.getImage())
         .bio(user.getBio())
         .following(false)
         .username(user.getUsername())
-        .build();
+        .build());
   }
 
   @Override

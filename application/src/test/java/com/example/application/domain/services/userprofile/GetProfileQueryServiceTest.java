@@ -28,7 +28,7 @@ class GetProfileQueryServiceTest {
     Optional<User> request = Optional.empty();
     Profile profile = Profile.builder().username("bob").build();
     when(loadProfilePort.isFollowing("bob", request)).thenReturn(false);
-    when(loadProfilePort.loadProfile("bob")).thenReturn(profile);
+    when(loadProfilePort.loadProfile("bob")).thenReturn(Optional.of(profile));
     // Act
 
     Profile actual = sut.getProfile(username, request);
