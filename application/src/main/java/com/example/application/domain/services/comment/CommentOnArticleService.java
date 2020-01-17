@@ -3,6 +3,7 @@ package com.example.application.domain.services.comment;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Comment;
+import com.example.application.domain.model.CommentId;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.ports.in.CommentOnArticleUseCase;
 import com.example.application.domain.ports.in.GetProfileQuery;
@@ -26,7 +27,7 @@ class CommentOnArticleService implements CommentOnArticleUseCase {
 
         Profile author = getProfileQuery.getProfile(input.getCommentAuthor().getUsername(), Optional.empty());
         Article article = loadArticlePort.findArticle(input.getArticleSlug()).orElseThrow(ArticleNotFoundException::new);
-        Comment newComment = Comment.builder().body(input.getBody()).author(author).id(UUID.randomUUID().toString()).articleId(article.getId()).build();
+        Comment newComment = Comment.builder().body(input.getBody()).author(author).id(CommentId.builder().id(UUID.randomUUID()).build()).articleId(article.getId()).build();
         return this.saveCommentPort.save(newComment);
     }
 }

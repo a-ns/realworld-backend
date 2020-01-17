@@ -52,7 +52,7 @@ class CommentOnArticleServiceTest {
         // Assert
         Assertions.assertEquals(author, actual.getAuthor().getUsername());
         Assertions.assertEquals(body, actual.getBody());
-        Assertions.assertFalse(actual.getId().isEmpty());
+        Assertions.assertFalse(actual.getId().toString().isEmpty());
     }
 
     @Test

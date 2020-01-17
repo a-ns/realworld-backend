@@ -11,12 +11,13 @@ import lombok.Data;
 @Data
 @Builder
 public class Comment {
-  private String id;
+  private CommentId id;
   private LocalDateTime createAt;
   private LocalDateTime updated;
   private String body;
   private Profile author;
   private Integer articleId;
+
 
 
 }
