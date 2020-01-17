@@ -1,13 +1,15 @@
 package com.example.application.domain.ports.in;
 
-import com.example.application.domain.exceptions.ExistingUserFoundException;
+import com.example.application.domain.exceptions.EmailAreadyTakenException;
+import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.SelfValidating;
 import com.example.application.domain.model.User;
 import javax.validation.constraints.NotNull;
 import lombok.Value;
 
 public interface RegisterUserUseCase {
-  User registerUser(UserRegistrationCommand registrant) throws ExistingUserFoundException;
+
+  User registerUser(UserRegistrationCommand registrant) throws UsernameAlreadyTakenException, EmailAreadyTakenException;
 
   @Value
   class UserRegistrationCommand extends SelfValidating<UserRegistrationCommand> {

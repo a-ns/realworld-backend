@@ -30,16 +30,22 @@ public class ArticleController {
 
   @GetMapping
   public ResponseEntity<List<GetArticleResponse>> findArticles(
-      @RequestParam List<String> tags,
+      @RequestParam String tags,
       @RequestParam String author,
-      @RequestParam Boolean favorited) {
+      @RequestParam String favorited,
+      @RequestParam Integer limit,
+      @RequestParam Integer offset,
+      @AuthenticationPrincipal User user) {
     return ResponseEntity.ok(
         this.getArticleQuery
             .getRecentArticles(
-                Optional.ofNullable(tags),
+                Optional.of(tags),
                 Optional.ofNullable(author),
                 Optional.ofNullable(favorited),
-                Optional.empty())
+                Optional.ofNullable(limit),
+                Optional.ofNullable(offset),
+                    Optional.ofNullable(user)
+               )
             .stream()
             .map(
                 article ->

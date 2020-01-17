@@ -7,7 +7,7 @@ import com.example.application.domain.model.Article;
 import com.example.application.domain.ports.out.DeleteArticlePort;
 import com.example.application.domain.ports.out.LoadArticleFavoriteCountPort;
 import com.example.application.domain.ports.out.LoadArticlePort;
-import com.example.application.domain.ports.out.LoadFavoritedPort;
+import com.example.application.domain.ports.out.LoadArticleFavoritedPort;
 import com.example.application.domain.ports.out.SaveArticlePort;
 import com.example.application.domain.ports.out.SaveFavoritePort;
 import com.example.application.domain.ports.out.UpdateArticlePort;
@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-class LoadArticlePersistenceAdapter
+class LoadArticleArticlePersistenceAdapter
     implements LoadArticlePort,
         SaveArticlePort,
         UpdateArticlePort,
         DeleteArticlePort,
-        LoadFavoritedPort,
+        LoadArticleFavoritedPort,
         LoadArticleFavoriteCountPort,
         SaveFavoritePort {
 

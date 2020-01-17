@@ -12,8 +12,10 @@ public interface GetArticleQuery {
   Article getArticle(String slug);
 
   List<Article> getRecentArticles(
-      Optional<List<String>> tags,
+      Optional<String> tag,
       Optional<String> author,
-      Optional<Boolean> favorited,
-      Optional<User> requester);
+      Optional<String> favorited,
+      Optional<Integer> limit,
+      Optional<Integer> offset,
+      Optional<User> user);
 }

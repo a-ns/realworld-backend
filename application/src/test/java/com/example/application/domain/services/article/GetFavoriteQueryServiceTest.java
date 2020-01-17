@@ -1,8 +1,6 @@
 package com.example.application.domain.services.article;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.example.application.domain.ports.out.LoadFavoritedPort;
+import com.example.application.domain.ports.out.LoadArticleFavoritedPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,13 +15,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class GetFavoriteQueryServiceTest {
 
   @InjectMocks GetFavoriteQueryService sut;
-  @Mock LoadFavoritedPort loadFavoritedPort;
+  @Mock
+  LoadArticleFavoritedPort loadArticleFavoritedPort;
 
   @DisplayName("returns true if the user has favorited the article")
   @Test
   void returns_true_when_favorited() {
     // Arrange
-    Mockito.when(loadFavoritedPort.isArticleFavoritedBy(5678, 1234)).thenReturn(true);
+    Mockito.when(loadArticleFavoritedPort.isArticleFavoritedBy(5678, 1234)).thenReturn(true);
     // Act
     Boolean actual = sut.hasFavorited(1234, 5678);
     // Assert
@@ -34,7 +33,7 @@ class GetFavoriteQueryServiceTest {
   @Test
   void returns_false_when_not_favorited() {
     // Arrange
-    Mockito.when(loadFavoritedPort.isArticleFavoritedBy(5678, 1234)).thenReturn(false);
+    Mockito.when(loadArticleFavoritedPort.isArticleFavoritedBy(5678, 1234)).thenReturn(false);
     // Act
     Boolean actual = sut.hasFavorited(1234, 5678);
     // Assert

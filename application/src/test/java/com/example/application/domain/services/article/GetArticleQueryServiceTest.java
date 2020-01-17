@@ -1,15 +1,18 @@
 package com.example.application.domain.services.article;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Profile;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.out.LoadArticleFavoriteCountPort;
 import com.example.application.domain.ports.out.LoadArticlePort;
-import com.example.application.domain.ports.out.LoadFavoritedPort;
+import com.example.application.domain.ports.out.LoadArticleFavoritedPort;
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+
+import com.example.application.domain.ports.out.LoadRecentArticlesPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +29,9 @@ class GetArticleQueryServiceTest {
   @InjectMocks GetArticleQueryService sut;
   @Mock private LoadArticlePort loadArticlePort;
   @Mock private GetProfileQuery getProfileQuery;
-  @Mock private LoadFavoritedPort loadFavoritedPort;
+  @Mock private LoadArticleFavoritedPort loadArticleFavoritedPort;
   @Mock private LoadArticleFavoriteCountPort loadArticleFavoriteCountPort;
+  @Mock private LoadRecentArticlesPort loadRecentArticlesPort;
 
   @Test
   @DisplayName("Get an article without a requester should return that the article is not favorited")
@@ -67,12 +71,24 @@ class GetArticleQueryServiceTest {
         .thenReturn(author);
     Mockito.when(this.loadArticleFavoriteCountPort.getFavoriteCount(Mockito.anyInt()))
         .thenReturn(1);
-    Mockito.when(this.loadFavoritedPort.isArticleFavoritedBy(articleId, userId)).thenReturn(true);
+    Mockito.when(this.loadArticleFavoritedPort.isArticleFavoritedBy(articleId, userId)).thenReturn(true);
     // Act
     Article actual = this.sut.getArticle(slug, requester);
     // Assert
 
     Assertions.assertEquals(article.getSlug(), actual.getSlug());
     Assertions.assertEquals(true, actual.getFavorited());
+  }
+
+  @Test
+  @DisplayName("Retrieves recent articles with default limit and offset of 20 and 0 respectively")
+  void retrieves_recent_articles(){
+    // Arrange
+
+    Mockito.when(this.loadRecentArticlesPort.loadRecentArticles(Optional.empty(), Optional.empty(), Optional.empty(), 20, 0)).thenReturn(Collections.emptyList());
+    // Act
+    List<Article> actual = sut.getRecentArticles(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
+    // Assert
+    Assertions.assertTrue(actual.isEmpty());
   }
 }

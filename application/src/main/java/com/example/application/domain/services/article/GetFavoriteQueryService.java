@@ -1,7 +1,7 @@
 package com.example.application.domain.services.article;
 
 import com.example.application.domain.ports.in.GetFavoriteQuery;
-import com.example.application.domain.ports.out.LoadFavoritedPort;
+import com.example.application.domain.ports.out.LoadArticleFavoritedPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 class GetFavoriteQueryService implements GetFavoriteQuery {
 
-  private LoadFavoritedPort loadFavoritedPort;
+  private LoadArticleFavoritedPort loadArticleFavoritedPort;
 
   @Override
   public Boolean hasFavorited(Integer userId, Integer articleId) {
-    return this.loadFavoritedPort.isArticleFavoritedBy(articleId, userId);
+    return this.loadArticleFavoritedPort.isArticleFavoritedBy(articleId, userId);
   }
 }

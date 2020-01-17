@@ -1,7 +1,6 @@
 package com.example.application.domain.services.userprofile;
 
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
-import com.example.application.domain.exceptions.ExistingUserFoundException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.RegisterUserUseCase;
@@ -19,7 +18,7 @@ class RegisterUserService implements RegisterUserUseCase {
   private final GetUserPort getUserPort;
   private final SaveUserPort saveUserPort;
 
-  public User registerUser(UserRegistrationCommand registrant) throws ExistingUserFoundException {
+  public User registerUser(UserRegistrationCommand registrant) {
     this.getUserPort
         .getUserByUsername(registrant.getUsername())
         .ifPresent(
