@@ -13,11 +13,8 @@
     <dependencies>
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.example</groupId>
             <artifactId>application</artifactId>
+            <version>0.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
