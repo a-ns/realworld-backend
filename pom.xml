@@ -12,7 +12,6 @@
         <module>adapters/persistence</module>
         <module>runner</module>
         <module>adapters/event</module>
-        <module>integrationtests</module>
     </modules>
 
     <parent>
