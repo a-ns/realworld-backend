@@ -1,12 +1,17 @@
 package com.example.adapters.web.dto;
 
 import com.example.application.domain.model.Profile;
+import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class ProfileResponse {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ProfileResponse implements Serializable {
 
   private ProfileResponseBody profile;
 
