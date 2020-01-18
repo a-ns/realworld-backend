@@ -1,3 +1,5 @@
+package com.example.integration;
+
 import com.example.adapters.web.dto.UserRegistration;
 import com.example.runner.Application;
 import org.junit.jupiter.api.Assertions;
