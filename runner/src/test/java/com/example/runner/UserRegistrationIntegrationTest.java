@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Disabled
 class UserRegistrationIntegrationTest {
     @LocalServerPort
     private int port;
@@ -21,7 +22,6 @@ class UserRegistrationIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    @Disabled
     void user_can_register(){
         // Arrange
         String email = "hello@world.com";
