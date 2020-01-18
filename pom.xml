@@ -12,6 +12,7 @@
         <module>adapters/persistence</module>
         <module>runner</module>
         <module>adapters/event</module>
+        <module>integrationtests</module>
     </modules>
 
     <parent>
@@ -22,7 +23,11 @@
     <packaging>pom</packaging>
     <dependencies>
 
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

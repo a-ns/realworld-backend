@@ -13,12 +13,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 public abstract class Audit {
 
-  @Temporal(TemporalType.TIMESTAMP)
+//  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at", nullable = false, updatable = false)
   @CreationTimestamp
   private LocalDateTime createdAt;
 
-  @Temporal(TemporalType.TIMESTAMP)
+//  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated_at", nullable = false)
   @UpdateTimestamp
   private LocalDateTime updatedAt;

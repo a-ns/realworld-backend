@@ -10,12 +10,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import com.example.application.domain.ports.out.SaveCommentPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-class CommentPersistenceAdapter implements DeleteCommentPort, LoadCommentPort {
+class CommentPersistenceAdapter implements DeleteCommentPort, LoadCommentPort, SaveCommentPort {
 
   private CommentJpaRepository repository;
   private CommentMapper mapper;
@@ -62,5 +64,11 @@ class CommentPersistenceAdapter implements DeleteCommentPort, LoadCommentPort {
           fillAuthor(Optional.of(entity), comment);
         });
     return comments.values();
+  }
+
+  @Override
+  public Comment save(Comment input) {
+    return input; // TODO actually save this
+    //return this.repository.save(this.mapper.);
   }
 }

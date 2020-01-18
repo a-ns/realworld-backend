@@ -1,10 +1,11 @@
 package com.example.adapters.persistence.comment;
 
 import com.example.adapters.persistence.Audit;
+import com.example.adapters.persistence.article.ArticleJpaEntity;
 import com.example.application.domain.model.Article;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+
 import lombok.Data;
 
 @Entity
@@ -16,5 +17,7 @@ public class CommentJpaEntity extends Audit {
 
   @Column private Integer authorId;
 
-  @Column private Article article;
+  @JoinColumn
+  @ManyToOne
+  private ArticleJpaEntity article;
 }

@@ -18,12 +18,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 
-  //    @Bean
-  //    public JwtTokenFilter jwtTokenFilter(){
-  //        return new JwtTokenFilter(null,null);
-  //    }
+
   @Autowired JwtTokenFilter jwtTokenFilter;
 
   @Override

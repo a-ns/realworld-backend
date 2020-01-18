@@ -14,7 +14,7 @@ import lombok.*;
 @Table(name = "user_e")
 public class UserJpaEntity {
 
-  @Id @GeneratedValue private int id;
+  @Id @GeneratedValue private Integer id;
 
   @Column(unique = true)
   private String username;

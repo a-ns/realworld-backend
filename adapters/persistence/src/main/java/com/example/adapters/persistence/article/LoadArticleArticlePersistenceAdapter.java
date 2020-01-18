@@ -4,13 +4,10 @@ import com.example.adapters.persistence.user.UserJpaEntity;
 import com.example.adapters.persistence.user.UserPersistenceMapper;
 import com.example.adapters.persistence.user.UserRepository;
 import com.example.application.domain.model.Article;
-import com.example.application.domain.ports.out.DeleteArticlePort;
-import com.example.application.domain.ports.out.LoadArticleFavoriteCountPort;
-import com.example.application.domain.ports.out.LoadArticleFavoritedPort;
-import com.example.application.domain.ports.out.LoadArticlePort;
-import com.example.application.domain.ports.out.SaveArticlePort;
-import com.example.application.domain.ports.out.SaveFavoritePort;
-import com.example.application.domain.ports.out.UpdateArticlePort;
+import com.example.application.domain.ports.out.*;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,6 +21,7 @@ class LoadArticleArticlePersistenceAdapter
         DeleteArticlePort,
         LoadArticleFavoritedPort,
         LoadArticleFavoriteCountPort,
+        LoadRecentArticlesPort,
         SaveFavoritePort {
 
   private ArticleRepository repository;
@@ -103,5 +101,10 @@ class LoadArticleArticlePersistenceAdapter
     return mapper.mapJpaToDomain(
         this.repository.findById(favorite.getArticleId()).get(),
         articleFavoriteRepository.countByArticleId(articleId));
+  }
+
+  @Override
+  public Collection<Article> loadRecentArticles(Optional<String> tags, Optional<String> author, Optional<String> favorited, Integer limit, Integer offset) {
+    return Collections.emptyList();
   }
 }
