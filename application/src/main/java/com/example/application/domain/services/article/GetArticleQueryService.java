@@ -28,7 +28,7 @@ class GetArticleQueryService implements GetArticleQuery {
 
   @Override
   public Article getArticle(String slug, User requester) {
-    return this.getArticle(slug, Optional.of(requester));
+    return this.getArticle(slug, Optional.ofNullable(requester));
   }
 
   private Article getArticle(String slug, Optional<User> requester) {
