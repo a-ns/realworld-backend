@@ -20,7 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(
     classes = Application.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserRegistrationPayloadIntegrationTest {
+class UserRegistrationIntegrationTest {
   @LocalServerPort private int port;
 
   @Autowired private TestRestTemplate restTemplate;

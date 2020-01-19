@@ -2,14 +2,19 @@ package com.example.adapters.web.dto.output;
 
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Profile;
+import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class GetArticleResponse {
+@NoArgsConstructor
+@AllArgsConstructor
+public class GetArticleResponse implements Serializable {
   private String slug;
   private String title;
   private String description;
@@ -31,6 +36,7 @@ public class GetArticleResponse {
         .favoritesCount(article.getFavoritesCount())
         .slug(article.getSlug())
         .tagList(article.getTags())
+        .title(article.getTitle())
         .updatedAt(article.getUpdatedAt().format(DateTimeFormatter.ISO_DATE_TIME))
         .author(
             GetProfileResponse.ProfileResponseBody.builder()
