@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -54,6 +55,37 @@ class UserRegistrationIntegrationTest {
             createURLWithPort("/profiles/" + username), ProfileResponse.class);
 
     Assertions.assertEquals(username, response.getBody().getUser().getUsername());
+  }
+
+  @Test
+  void cannot_login_with_wrong_password() {
+    // Arrange
+    String email = "hello-1@world.com";
+    String password = "password";
+    String username = "wrong";
+    HttpEntity<UserRegistration> body =
+        new HttpEntity<>(
+            UserRegistration.builder()
+                .user(
+                    UserRegistration.Body.builder()
+                        .email(email)
+                        .password(password)
+                        .username(username)
+                        .build())
+                .build());
+    HttpEntity<UserLogin> loginBody =
+        new HttpEntity<UserLogin>(
+            UserLogin.builder()
+                .user(UserLogin.Body.builder().email(email).password(password + "wrong").build())
+                .build());
+
+    // Act
+    ResponseEntity<UserResponse> response =
+        restTemplate.postForEntity(createURLWithPort("/users"), body, UserResponse.class);
+    ResponseEntity<UserResponse> loginResponse =
+        restTemplate.postForEntity(
+            createURLWithPort("/users/login"), loginBody, UserResponse.class);
+    Assertions.assertEquals(HttpStatus.UNAUTHORIZED, loginResponse.getStatusCode());
   }
 
   @Test
