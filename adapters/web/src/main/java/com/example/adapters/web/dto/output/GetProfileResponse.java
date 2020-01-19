@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.output;
 
 import com.example.application.domain.model.Profile;
 import java.io.Serializable;
@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileResponse implements Serializable {
+public class GetProfileResponse implements Serializable {
 
   private ProfileResponseBody profile;
 
-  public static ProfileResponse mapProfileToProfileResponse(Profile profile) {
-    return ProfileResponse.builder()
+  public static GetProfileResponse mapProfileToProfileResponse(Profile profile) {
+    return GetProfileResponse.builder()
         .profile(
             ProfileResponseBody.builder()
                 .bio(profile.getBio())

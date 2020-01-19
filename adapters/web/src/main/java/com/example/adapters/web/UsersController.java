@@ -1,9 +1,9 @@
 package com.example.adapters.web;
 
-import com.example.adapters.web.dto.UserLogin;
-import com.example.adapters.web.dto.UserRegistration;
-import com.example.adapters.web.dto.UserResponse;
-import com.example.adapters.web.dto.UserWebMapper;
+import com.example.adapters.web.dto.input.UserLoginPayload;
+import com.example.adapters.web.dto.input.UserRegistrationPayload;
+import com.example.adapters.web.dto.mapper.UserWebMapper;
+import com.example.adapters.web.dto.output.GetUserResponse;
 import com.example.application.domain.exceptions.EmailAreadyTakenException;
 import com.example.application.domain.exceptions.UsernameAlreadyTakenException;
 import com.example.application.domain.ports.in.LoginUserUseCase;
@@ -26,7 +26,7 @@ public class UsersController {
   private UserWebMapper userMapper;
 
   @PostMapping
-  public ResponseEntity<UserResponse> createUser(@RequestBody UserRegistration body) {
+  public ResponseEntity<GetUserResponse> createUser(@RequestBody UserRegistrationPayload body) {
     try {
 
       return ResponseEntity.ok(
@@ -42,7 +42,7 @@ public class UsersController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<UserResponse> login(@RequestBody UserLogin body) {
+  public ResponseEntity<GetUserResponse> login(@RequestBody UserLoginPayload body) {
     try {
       return ResponseEntity.ok()
           .body(

@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.input;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
@@ -6,18 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class UserRegistration implements Serializable {
+@Builder
+public class UserLoginPayload implements Serializable {
 
   private Body user;
 
-  @Data
   @Builder
+  @Data
   public static class Body {
-    private String username;
+
     private String email;
     private String password;
   }

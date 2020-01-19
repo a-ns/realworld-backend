@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.output;
 
 import com.example.application.domain.model.Comment;
 import com.example.application.domain.model.Profile;

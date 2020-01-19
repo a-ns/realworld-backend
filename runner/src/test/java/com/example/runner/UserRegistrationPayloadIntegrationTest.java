@@ -1,9 +1,9 @@
 package com.example.runner;
 
-import com.example.adapters.web.dto.ProfileResponse;
-import com.example.adapters.web.dto.UserLogin;
-import com.example.adapters.web.dto.UserRegistration;
-import com.example.adapters.web.dto.UserResponse;
+import com.example.adapters.web.dto.input.UserLoginPayload;
+import com.example.adapters.web.dto.input.UserRegistrationPayload;
+import com.example.adapters.web.dto.output.GetProfileResponse;
+import com.example.adapters.web.dto.output.GetUserResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(
     classes = Application.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserRegistrationIntegrationTest {
+class UserRegistrationPayloadIntegrationTest {
   @LocalServerPort private int port;
 
   @Autowired private TestRestTemplate restTemplate;
@@ -32,27 +32,27 @@ class UserRegistrationIntegrationTest {
     String email = "test@world.com";
     String password = "password";
     String username = "test";
-    HttpEntity<UserRegistration> body =
+    HttpEntity<UserRegistrationPayload> body =
         new HttpEntity<>(
-            UserRegistration.builder()
+            UserRegistrationPayload.builder()
                 .user(
-                    UserRegistration.Body.builder()
+                    UserRegistrationPayload.Body.builder()
                         .email(email)
                         .password(password)
                         .username(username)
                         .build())
                 .build());
     // Act
-    ResponseEntity<UserResponse> response =
-        restTemplate.postForEntity(createURLWithPort("/users"), body, UserResponse.class);
+    ResponseEntity<GetUserResponse> response =
+        restTemplate.postForEntity(createURLWithPort("/users"), body, GetUserResponse.class);
     // Assert
     Assertions.assertEquals(username, response.getBody().getUser().getUsername());
 
     // Query for registered user
     // Act
-    ResponseEntity<ProfileResponse> response2 =
+    ResponseEntity<GetProfileResponse> response2 =
         restTemplate.getForEntity(
-            createURLWithPort("/profiles/" + username), ProfileResponse.class);
+            createURLWithPort("/profiles/" + username), GetProfileResponse.class);
 
     Assertions.assertEquals(username, response.getBody().getUser().getUsername());
   }
@@ -63,28 +63,32 @@ class UserRegistrationIntegrationTest {
     String email = "hello-1@world.com";
     String password = "password";
     String username = "wrong";
-    HttpEntity<UserRegistration> body =
+    HttpEntity<UserRegistrationPayload> body =
         new HttpEntity<>(
-            UserRegistration.builder()
+            UserRegistrationPayload.builder()
                 .user(
-                    UserRegistration.Body.builder()
+                    UserRegistrationPayload.Body.builder()
                         .email(email)
                         .password(password)
                         .username(username)
                         .build())
                 .build());
-    HttpEntity<UserLogin> loginBody =
-        new HttpEntity<UserLogin>(
-            UserLogin.builder()
-                .user(UserLogin.Body.builder().email(email).password(password + "wrong").build())
+    HttpEntity<UserLoginPayload> loginBody =
+        new HttpEntity<UserLoginPayload>(
+            UserLoginPayload.builder()
+                .user(
+                    UserLoginPayload.Body.builder()
+                        .email(email)
+                        .password(password + "wrong")
+                        .build())
                 .build());
 
     // Act
-    ResponseEntity<UserResponse> response =
-        restTemplate.postForEntity(createURLWithPort("/users"), body, UserResponse.class);
-    ResponseEntity<UserResponse> loginResponse =
+    ResponseEntity<GetUserResponse> response =
+        restTemplate.postForEntity(createURLWithPort("/users"), body, GetUserResponse.class);
+    ResponseEntity<GetUserResponse> loginResponse =
         restTemplate.postForEntity(
-            createURLWithPort("/users/login"), loginBody, UserResponse.class);
+            createURLWithPort("/users/login"), loginBody, GetUserResponse.class);
     Assertions.assertEquals(HttpStatus.UNAUTHORIZED, loginResponse.getStatusCode());
   }
 
@@ -94,28 +98,28 @@ class UserRegistrationIntegrationTest {
     String email = "hello@world.com";
     String password = "password";
     String username = "alex";
-    HttpEntity<UserRegistration> body =
+    HttpEntity<UserRegistrationPayload> body =
         new HttpEntity<>(
-            UserRegistration.builder()
+            UserRegistrationPayload.builder()
                 .user(
-                    UserRegistration.Body.builder()
+                    UserRegistrationPayload.Body.builder()
                         .email(email)
                         .password(password)
                         .username(username)
                         .build())
                 .build());
-    HttpEntity<UserLogin> loginBody =
-        new HttpEntity<UserLogin>(
-            UserLogin.builder()
-                .user(UserLogin.Body.builder().email(email).password(password).build())
+    HttpEntity<UserLoginPayload> loginBody =
+        new HttpEntity<UserLoginPayload>(
+            UserLoginPayload.builder()
+                .user(UserLoginPayload.Body.builder().email(email).password(password).build())
                 .build());
 
     // Act
-    ResponseEntity<UserResponse> response =
-        restTemplate.postForEntity(createURLWithPort("/users"), body, UserResponse.class);
-    ResponseEntity<UserResponse> loginResponse =
+    ResponseEntity<GetUserResponse> response =
+        restTemplate.postForEntity(createURLWithPort("/users"), body, GetUserResponse.class);
+    ResponseEntity<GetUserResponse> loginResponse =
         restTemplate.postForEntity(
-            createURLWithPort("/users/login"), loginBody, UserResponse.class);
+            createURLWithPort("/users/login"), loginBody, GetUserResponse.class);
     // Assert
     Assertions.assertEquals(
         loginResponse.getBody().getUser().getEmail(), response.getBody().getUser().getEmail());

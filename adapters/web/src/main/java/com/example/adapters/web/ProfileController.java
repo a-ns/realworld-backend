@@ -1,6 +1,6 @@
 package com.example.adapters.web;
 
-import com.example.adapters.web.dto.ProfileResponse;
+import com.example.adapters.web.dto.output.GetProfileResponse;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.FollowUserUseCase;
@@ -22,13 +22,13 @@ public class ProfileController {
   private GetProfileQuery getProfileQuery;
 
   @PostMapping("/{usernameToFollow}/follow")
-  public ResponseEntity<ProfileResponse> follow(
+  public ResponseEntity<GetProfileResponse> follow(
       @AuthenticationPrincipal User requestingToFollow, @PathVariable String usernameToFollow) {
     try {
       User userToFollow =
           getUserPort.getUserByUsername(usernameToFollow).orElseThrow(UserNotFoundException::new);
       return ResponseEntity.ok(
-          ProfileResponse.mapProfileToProfileResponse(
+          GetProfileResponse.mapProfileToProfileResponse(
               followUserUseCase.follow(userToFollow, requestingToFollow)));
     } catch (UserNotFoundException e) {
       return ResponseEntity.notFound().build();
@@ -36,13 +36,13 @@ public class ProfileController {
   }
 
   @PostMapping("/{usernameToUnfollow}/unfollow")
-  public ResponseEntity<ProfileResponse> unfollow(
+  public ResponseEntity<GetProfileResponse> unfollow(
       @AuthenticationPrincipal User requestingToUnfollow, @PathVariable String usernameToUnfollow) {
     try {
       User userToUnfollow =
           getUserPort.getUserByUsername(usernameToUnfollow).orElseThrow(UserNotFoundException::new);
       return ResponseEntity.ok(
-          ProfileResponse.mapProfileToProfileResponse(
+          GetProfileResponse.mapProfileToProfileResponse(
               followUserUseCase.unfollow(userToUnfollow, requestingToUnfollow)));
     } catch (UserNotFoundException e) {
       return ResponseEntity.notFound().build();
@@ -50,11 +50,11 @@ public class ProfileController {
   }
 
   @GetMapping("/{username}")
-  public ResponseEntity<ProfileResponse> get(
+  public ResponseEntity<GetProfileResponse> get(
       @AuthenticationPrincipal User authorized, @PathVariable String username) {
     try {
       return ResponseEntity.ok(
-          ProfileResponse.mapProfileToProfileResponse(
+          GetProfileResponse.mapProfileToProfileResponse(
               getProfileQuery.getProfile(
                   username, authorized == null ? Optional.empty() : Optional.of(authorized))));
     } catch (UserNotFoundException e) {

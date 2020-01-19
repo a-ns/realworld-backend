@@ -1,4 +1,4 @@
-package com.example.adapters.web;
+package com.example.adapters.web.jwt;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;

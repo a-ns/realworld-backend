@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.input;
 
 import java.util.List;
 import javax.annotation.Nullable;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DraftArticle {
+public class CreateArticlePayload {
 
   private Body article;
 

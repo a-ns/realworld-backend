@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.input;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

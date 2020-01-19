@@ -1,8 +1,9 @@
 package com.example.adapters.web;
 
-import com.example.adapters.web.dto.UserResponse;
-import com.example.adapters.web.dto.UserUpdateRequest;
-import com.example.adapters.web.dto.UserWebMapper;
+import com.example.adapters.web.dto.input.UserUpdatePayload;
+import com.example.adapters.web.dto.mapper.UserWebMapper;
+import com.example.adapters.web.dto.output.GetUserResponse;
+import com.example.adapters.web.jwt.AuthService;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.in.UpdateUserUseCase;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,8 @@ public class UserController {
   private UpdateUserUseCase userUpdator;
 
   @PutMapping
-  public ResponseEntity<UserResponse> replace(
-      @RequestBody UserUpdateRequest body, @AuthenticationPrincipal User user) {
+  public ResponseEntity<GetUserResponse> replace(
+      @RequestBody UserUpdatePayload body, @AuthenticationPrincipal User user) {
     try {
       UpdateUserUseCase.UpdateUserCommand payload =
           UpdateUserUseCase.UpdateUserCommand.builder()

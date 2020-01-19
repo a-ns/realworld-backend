@@ -1,8 +1,8 @@
 package com.example.runner;
 
-import com.example.adapters.web.dto.ProfileResponse;
-import com.example.adapters.web.dto.UserRegistration;
-import com.example.adapters.web.dto.UserResponse;
+import com.example.adapters.web.dto.input.UserRegistrationPayload;
+import com.example.adapters.web.dto.output.GetProfileResponse;
+import com.example.adapters.web.dto.output.GetUserResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,21 +33,21 @@ public class FollowProfileIntegrationTest {
     String email = "hello-3@world.com";
     String password = "password";
     String username = "alex1";
-    HttpEntity<UserRegistration> user1 =
+    HttpEntity<UserRegistrationPayload> user1 =
         new HttpEntity<>(
-            UserRegistration.builder()
+            UserRegistrationPayload.builder()
                 .user(
-                    UserRegistration.Body.builder()
+                    UserRegistrationPayload.Body.builder()
                         .email(email)
                         .password(password)
                         .username(username)
                         .build())
                 .build());
-    HttpEntity<UserRegistration> user2 =
+    HttpEntity<UserRegistrationPayload> user2 =
         new HttpEntity<>(
-            UserRegistration.builder()
+            UserRegistrationPayload.builder()
                 .user(
-                    UserRegistration.Body.builder()
+                    UserRegistrationPayload.Body.builder()
                         .email("hello-4@world.com")
                         .password(password)
                         .username("alex2")
@@ -55,31 +55,31 @@ public class FollowProfileIntegrationTest {
                 .build());
 
     // Act
-    ResponseEntity<UserResponse> user1Res =
-        restTemplate.postForEntity(createURLWithPort("/users"), user1, UserResponse.class);
-    ResponseEntity<UserResponse> user2Res =
-        restTemplate.postForEntity(createURLWithPort("/users"), user2, UserResponse.class);
+    ResponseEntity<GetUserResponse> user1Res =
+        restTemplate.postForEntity(createURLWithPort("/users"), user1, GetUserResponse.class);
+    ResponseEntity<GetUserResponse> user2Res =
+        restTemplate.postForEntity(createURLWithPort("/users"), user2, GetUserResponse.class);
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Token " + user2Res.getBody().getUser().getToken());
     HttpEntity<?> followHeaders = new HttpEntity<>(null, headers);
 
-    ResponseEntity<ProfileResponse> profileResponse =
+    ResponseEntity<GetProfileResponse> profileResponse =
         restTemplate.postForEntity(
-            createURLWithPort("/profiles/alex1/follow"), followHeaders, ProfileResponse.class);
+            createURLWithPort("/profiles/alex1/follow"), followHeaders, GetProfileResponse.class);
     Assertions.assertTrue(profileResponse.getBody().getProfile().getFollowing());
 
-    ResponseEntity<ProfileResponse> unfollowProfileResponse =
+    ResponseEntity<GetProfileResponse> unfollowProfileResponse =
         restTemplate.postForEntity(
-            createURLWithPort("/profiles/alex1/unfollow"), followHeaders, ProfileResponse.class);
+            createURLWithPort("/profiles/alex1/unfollow"), followHeaders, GetProfileResponse.class);
     Assertions.assertFalse(unfollowProfileResponse.getBody().getProfile().getFollowing());
 
-    ResponseEntity<ProfileResponse> unfollowedProfileResponse =
+    ResponseEntity<GetProfileResponse> unfollowedProfileResponse =
         restTemplate.exchange(
             createURLWithPort("/profiles/alex1"),
             HttpMethod.GET,
             followHeaders,
-            ProfileResponse.class);
+            GetProfileResponse.class);
     Assertions.assertFalse(unfollowedProfileResponse.getBody().getProfile().getFollowing());
   }
 

@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.output;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-public class UserResponse implements Serializable {
+public class GetUserResponse implements Serializable {
   private User user;
 
   @AllArgsConstructor

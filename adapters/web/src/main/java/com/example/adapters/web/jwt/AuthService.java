@@ -1,6 +1,5 @@
-package com.example.adapters.web;
+package com.example.adapters.web.jwt;
 
-import com.example.adapters.web.jwt.JwtService;
 import com.example.application.domain.exceptions.UserNotFoundException;
 import com.example.application.domain.model.User;
 import com.example.application.domain.ports.out.AuthPort;

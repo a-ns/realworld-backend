@@ -1,9 +1,9 @@
 package com.example.adapters.web;
 
-import com.example.adapters.web.dto.CreateCommentPayload;
-import com.example.adapters.web.dto.DraftArticle;
-import com.example.adapters.web.dto.GetArticleResponse;
-import com.example.adapters.web.dto.GetCommentResponse;
+import com.example.adapters.web.dto.input.CreateArticlePayload;
+import com.example.adapters.web.dto.input.CreateCommentPayload;
+import com.example.adapters.web.dto.output.GetArticleResponse;
+import com.example.adapters.web.dto.output.GetCommentResponse;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
@@ -118,9 +118,9 @@ public class ArticleController {
 
   @PostMapping
   public ResponseEntity<GetArticleResponse> createArticle(
-      @AuthenticationPrincipal User user, @RequestBody DraftArticle draftArticle) {
+      @AuthenticationPrincipal User user, @RequestBody CreateArticlePayload createArticlePayload) {
     try {
-      DraftArticle.Body draft = draftArticle.getArticle();
+      CreateArticlePayload.Body draft = createArticlePayload.getArticle();
       Article article =
           publishArticleUseCase.publishArticle(
               PublishArticleUseCase.PublishArticleCommand.builder()

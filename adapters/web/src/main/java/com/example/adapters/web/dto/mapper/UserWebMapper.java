@@ -1,14 +1,16 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.mapper;
 
+import com.example.adapters.web.dto.input.UserUpdatePayload;
+import com.example.adapters.web.dto.output.GetUserResponse;
 import com.example.application.domain.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserWebMapper {
-  public UserResponse mapUserToResponse(User user) {
-    return UserResponse.builder()
+  public GetUserResponse mapUserToResponse(User user) {
+    return GetUserResponse.builder()
         .user(
-            UserResponse.User.builder()
+            GetUserResponse.User.builder()
                 .bio(user.getBio())
                 .email(user.getEmail())
                 .image(user.getImage())
@@ -18,7 +20,7 @@ public class UserWebMapper {
         .build();
   }
 
-  public User mapResponseToUser(UserUpdateRequest res) {
+  public User mapResponseToUser(UserUpdatePayload res) {
     return User.builder()
         .username(res.getUser().getUsername())
         .image(res.getUser().getImage())

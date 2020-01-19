@@ -1,4 +1,4 @@
-package com.example.adapters.web.dto;
+package com.example.adapters.web.dto.output;
 
 import com.example.application.domain.model.Article;
 import com.example.application.domain.model.Profile;
@@ -19,7 +19,7 @@ public class GetArticleResponse {
   private String updatedAt;
   private Boolean favorited;
   private Integer favoritesCount;
-  private ProfileResponse.ProfileResponseBody author;
+  private GetProfileResponse.ProfileResponseBody author;
 
   public static GetArticleResponse mapArticleToArticleResponse(Article article, Profile profile) {
 
@@ -33,7 +33,7 @@ public class GetArticleResponse {
         .tagList(article.getTags())
         .updatedAt(article.getUpdatedAt().format(DateTimeFormatter.ISO_DATE_TIME))
         .author(
-            ProfileResponse.ProfileResponseBody.builder()
+            GetProfileResponse.ProfileResponseBody.builder()
                 .bio(profile.getBio())
                 .following(profile.getFollowing())
                 .image(profile.getImage())
