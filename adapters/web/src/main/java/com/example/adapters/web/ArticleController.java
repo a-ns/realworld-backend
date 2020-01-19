@@ -1,15 +1,16 @@
 package com.example.adapters.web;
 
+import com.example.adapters.web.dto.CreateCommentPayload;
 import com.example.adapters.web.dto.DraftArticle;
 import com.example.adapters.web.dto.GetArticleResponse;
+import com.example.adapters.web.dto.GetCommentResponse;
 import com.example.application.domain.exceptions.ArticleAlreadyExistsException;
 import com.example.application.domain.exceptions.ArticleNotFoundException;
 import com.example.application.domain.model.Article;
+import com.example.application.domain.model.Comment;
+import com.example.application.domain.model.CommentId;
 import com.example.application.domain.model.User;
-import com.example.application.domain.ports.in.DeleteArticleUseCase;
-import com.example.application.domain.ports.in.FavoriteArticleUseCase;
-import com.example.application.domain.ports.in.GetArticleQuery;
-import com.example.application.domain.ports.in.PublishArticleUseCase;
+import com.example.application.domain.ports.in.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +28,57 @@ public class ArticleController {
   private PublishArticleUseCase publishArticleUseCase;
   private FavoriteArticleUseCase favoriteArticle;
   private DeleteArticleUseCase deleteArticleUseCase;
+  private CommentOnArticleUseCase commentOnArticleUseCase;
+  private GetArticleCommentsQuery getArticleCommentsQuery;
+  private DeleteCommentOnArticleUseCase deleteCommentOnArticleUseCase;
+
+  @PostMapping("/{slug}/comments")
+  public ResponseEntity<GetCommentResponse> createComment(
+      @RequestBody CreateCommentPayload payload,
+      @AuthenticationPrincipal User user,
+      @PathVariable String slug) {
+    try {
+      Comment created =
+          this.commentOnArticleUseCase.publishComment(
+              CommentOnArticleUseCase.PublishCommentCommand.builder()
+                  .commentAuthor(user)
+                  .articleSlug(slug)
+                  .body(payload.getComment().getBody())
+                  .build());
+      return ResponseEntity.ok(GetCommentResponse.from(created));
+    } catch (Exception e) {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @GetMapping("/{slug}/comments")
+  public ResponseEntity<List<GetCommentResponse>> getComments(
+      @AuthenticationPrincipal User user, @PathVariable String slug) {
+    try {
+      var comments = this.getArticleCommentsQuery.getComments(slug, user);
+      return ResponseEntity.ok(
+          comments.stream().map(GetCommentResponse::from).collect(Collectors.toList()));
+    } catch (Exception e) {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @DeleteMapping("/{slug}/comments/{id}")
+  public ResponseEntity<?> deleteComment(
+      @AuthenticationPrincipal User user, @PathVariable String slug, @PathVariable Integer id) {
+    try {
+      var input =
+          DeleteCommentOnArticleUseCase.DeleteCommentCommand.builder()
+              .requester(user)
+              .slug(slug)
+              .commentId(CommentId.builder().id(id).build())
+              .build();
+      this.deleteCommentOnArticleUseCase.delete(input);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.notFound().build();
+    }
+  }
 
   @GetMapping
   public ResponseEntity<List<GetArticleResponse>> findArticles(

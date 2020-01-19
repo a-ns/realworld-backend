@@ -10,7 +10,6 @@ import com.example.application.domain.ports.in.GetProfileQuery;
 import com.example.application.domain.ports.out.LoadArticlePort;
 import com.example.application.domain.ports.out.SaveCommentPort;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ class CommentOnArticleService implements CommentOnArticleUseCase {
         Comment.builder()
             .body(input.getBody())
             .author(author)
-            .id(CommentId.builder().id(UUID.randomUUID()).build())
+            .id(CommentId.builder().build())
             .articleId(article.getId())
             .build();
     return this.saveCommentPort.save(newComment);

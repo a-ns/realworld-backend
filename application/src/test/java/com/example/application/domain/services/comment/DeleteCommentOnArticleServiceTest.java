@@ -10,7 +10,6 @@ import com.example.application.domain.ports.in.GetArticleQuery;
 import com.example.application.domain.ports.out.DeleteCommentPort;
 import com.example.application.domain.ports.out.LoadCommentPort;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +32,8 @@ class DeleteCommentOnArticleServiceTest {
   @Test
   void can_only_delete_comment_if_it_exists() {
     // Arrange
-    UUID id = UUID.randomUUID();
-    var commentId = CommentId.builder().id(id).build();
+    Integer idd = 1234;
+    var commentId = CommentId.builder().id(idd).build();
     var input =
         DeleteCommentOnArticleUseCase.DeleteCommentCommand.builder().commentId(commentId).build();
 
@@ -48,8 +47,8 @@ class DeleteCommentOnArticleServiceTest {
   @Test
   void deletes_a_comment_for_the_specified_article() {
     // Arrange
-    var uuid = UUID.randomUUID();
-    var id = CommentId.builder().id(uuid).build();
+    var idd = 1234;
+    var id = CommentId.builder().id(idd).build();
     var comment = Comment.builder().id(id).build();
     var input = DeleteCommentOnArticleUseCase.DeleteCommentCommand.builder().commentId(id).build();
     Mockito.when(this.loadCommentPort.getComment(id)).thenReturn(Optional.of(comment));
