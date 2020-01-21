@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,10 +19,10 @@ public class UserUpdatePayload {
   @NoArgsConstructor
   @Builder
   public static class User {
-    private String email;
-    private String password;
-    private String username;
-    private String bio;
-    private String image;
+    @Nullable private String email;
+    @Nullable private String password;
+    @Nullable private String username;
+    @Nullable private String bio;
+    @Nullable private String image;
   }
 }
