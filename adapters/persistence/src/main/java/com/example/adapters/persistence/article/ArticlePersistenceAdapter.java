@@ -104,7 +104,12 @@ class LoadArticleArticlePersistenceAdapter
   }
 
   @Override
-  public Collection<Article> loadRecentArticles(Optional<String> tags, Optional<String> author, Optional<String> favorited, Integer limit, Integer offset) {
+  public Collection<Article> loadRecentArticles(
+      Optional<String> tags,
+      Optional<String> author,
+      Optional<String> favorited,
+      Integer limit,
+      Integer offset) {
     return Collections.emptyList();
   }
 }
