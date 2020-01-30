@@ -5,7 +5,6 @@ import com.example.adapters.persistence.user.UserPersistenceMapper;
 import com.example.adapters.persistence.user.UserRepository;
 import com.example.application.domain.model.Article;
 import com.example.application.domain.ports.out.*;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-class LoadArticleArticlePersistenceAdapter
+class ArticlePersistenceAdapter
     implements LoadArticlePort,
         SaveArticlePort,
         UpdateArticlePort,
