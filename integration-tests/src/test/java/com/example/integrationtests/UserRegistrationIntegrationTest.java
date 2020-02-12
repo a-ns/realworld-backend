@@ -1,9 +1,10 @@
-package com.example.runner;
+package com.example.integrationtests;
 
 import com.example.adapters.web.dto.input.UserLoginPayload;
 import com.example.adapters.web.dto.input.UserRegistrationPayload;
 import com.example.adapters.web.dto.output.GetProfileResponse;
 import com.example.adapters.web.dto.output.GetUserResponse;
+import com.example.runner.SpringRunner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
