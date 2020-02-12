@@ -1,4 +1,4 @@
-package com.example.integrationtests;
+package com.example.integration.tests;
 
 import com.example.adapters.web.dto.input.CreateArticlePayload;
 import com.example.adapters.web.dto.input.UserRegistrationPayload;
@@ -6,6 +6,7 @@ import com.example.adapters.web.dto.output.GetArticleResponse;
 import com.example.adapters.web.dto.output.GetUserResponse;
 import com.example.runner.SpringRunner;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +15,27 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
     classes = SpringRunner.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CreateAndFindArticleIntegrationTest {
+public class ArticleFavoriteIntegrationTest {
 
   @LocalServerPort private int port;
 
   @Autowired private TestRestTemplate restTemplate;
 
+  @DisplayName("A User can favorite an article")
   @Test
-  void create_and_find_article() {
+  void user_can_favorite_article() {
 
     // Arrange
-    String email = "hello-7@world.com";
+    String email = "hello-5@world.com";
     String password = "password";
-    String username = "alex7";
+    String username = "alex5";
     HttpEntity<UserRegistrationPayload> user1 =
         new HttpEntity<>(
             UserRegistrationPayload.builder()
@@ -57,25 +60,32 @@ public class CreateAndFindArticleIntegrationTest {
                     CreateArticlePayload.Body.builder()
                         .body("article body")
                         .description("article description")
-                        .title("article title1")
+                        .title("article title")
                         .build())
                 .build(),
             headers);
+    var favoritePayload = new HttpEntity<>(null, headers);
 
-    restTemplate.postForEntity(
-        createURLWithPort("/articles/"), articlePayload, GetArticleResponse.class);
-    var articleFound =
-        restTemplate.getForEntity(
-            createURLWithPort("/articles/article-title1"), GetArticleResponse.class);
+    var articleRes =
+        restTemplate.postForEntity(
+            createURLWithPort("/articles/"), articlePayload, GetArticleResponse.class);
+    var favoritedArticle =
+        restTemplate.postForEntity(
+            createURLWithPort("/articles/" + articleRes.getBody().getSlug() + "/favorite"),
+            favoritePayload,
+            GetArticleResponse.class);
 
-    Assertions.assertEquals("article body", articleFound.getBody().getBody());
-    Assertions.assertEquals("article description", articleFound.getBody().getDescription());
-    Assertions.assertEquals("article title1", articleFound.getBody().getTitle());
-    Assertions.assertEquals(0, articleFound.getBody().getFavoritesCount());
-    Assertions.assertEquals(false, articleFound.getBody().getFavorited());
-    Assertions.assertEquals("article-title1", articleFound.getBody().getSlug());
+    Assertions.assertTrue(favoritedArticle.getBody().getFavorited());
+    Assertions.assertEquals(1, favoritedArticle.getBody().getFavoritesCount());
 
-    Assertions.assertEquals("alex7", articleFound.getBody().getAuthor().getUsername());
+    var unfavoritedArticle =
+        restTemplate.exchange(
+            createURLWithPort("/articles/" + articleRes.getBody().getSlug() + "/favorite"),
+            HttpMethod.DELETE,
+            favoritePayload,
+            GetArticleResponse.class);
+    Assertions.assertFalse(unfavoritedArticle.getBody().getFavorited());
+    Assertions.assertEquals(0, unfavoritedArticle.getBody().getFavoritesCount());
   }
 
   private String createURLWithPort(String uri) {

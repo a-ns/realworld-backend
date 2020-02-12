@@ -1,4 +1,4 @@
-package com.example.integrationtests;
+package com.example.integration.tests;
 
 import com.example.adapters.web.dto.input.UserLoginPayload;
 import com.example.adapters.web.dto.input.UserRegistrationPayload;
