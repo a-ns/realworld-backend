@@ -22,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(
     classes = SpringRunner.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class FollowProfileIntegrationTest {
+public class FollowProfileIntegrationTest extends IntegrationTest {
   @LocalServerPort private int port;
 
   @Autowired private TestRestTemplate restTemplate;
