@@ -1,5 +1,0 @@
-app:
-  datasource:
-    jdbc-url: jdbc:tc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: mysecretpassword

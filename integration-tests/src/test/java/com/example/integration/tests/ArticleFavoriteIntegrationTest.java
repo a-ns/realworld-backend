@@ -22,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(
     classes = SpringRunner.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ArticleFavoriteIntegrationTest {
+public class ArticleFavoriteIntegrationTest extends IntegrationTest {
 
   @LocalServerPort private int port;
 
