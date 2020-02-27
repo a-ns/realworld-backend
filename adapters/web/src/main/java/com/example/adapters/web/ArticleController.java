@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,16 +83,16 @@ public class ArticleController {
 
   @GetMapping
   public ResponseEntity<List<GetArticleResponse>> findArticles(
-      @RequestParam String tags,
-      @RequestParam String author,
-      @RequestParam String favorited,
-      @RequestParam Integer limit,
-      @RequestParam Integer offset,
+      @RequestParam @Nullable String tags,
+      @RequestParam @Nullable String author,
+      @RequestParam @Nullable String favorited,
+      @RequestParam @Nullable Integer limit,
+      @RequestParam @Nullable Integer offset,
       @AuthenticationPrincipal User user) {
     return ResponseEntity.ok(
         this.getArticleQuery
             .getRecentArticles(
-                Optional.of(tags),
+                Optional.ofNullable(tags),
                 Optional.ofNullable(author),
                 Optional.ofNullable(favorited),
                 Optional.ofNullable(limit),
