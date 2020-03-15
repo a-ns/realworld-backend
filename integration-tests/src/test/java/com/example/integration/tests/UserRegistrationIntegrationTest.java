@@ -4,27 +4,13 @@ import com.example.adapters.web.dto.input.UserLoginPayload;
 import com.example.adapters.web.dto.input.UserRegistrationPayload;
 import com.example.adapters.web.dto.output.GetProfileResponse;
 import com.example.adapters.web.dto.output.GetUserResponse;
-import com.example.runner.SpringRunner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(
-    classes = SpringRunner.class,
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserRegistrationIntegrationTest extends IntegrationTest {
-  @LocalServerPort private int port;
-
-  @Autowired private TestRestTemplate restTemplate;
 
   @Test
   void user_can_register_and_query() {
@@ -133,9 +119,5 @@ class UserRegistrationIntegrationTest extends IntegrationTest {
         loginResponse.getBody().getUser().getImage(), response.getBody().getUser().getImage());
     Assertions.assertNotNull(loginResponse.getBody().getUser().getToken());
     Assertions.assertNotNull(response.getBody().getUser().getToken());
-  }
-
-  private String createURLWithPort(String uri) {
-    return "http://localhost:" + port + uri;
   }
 }

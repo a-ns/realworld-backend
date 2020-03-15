@@ -3,30 +3,15 @@ package com.example.integration.tests;
 import com.example.adapters.web.dto.input.UserRegistrationPayload;
 import com.example.adapters.web.dto.input.UserUpdatePayload;
 import com.example.adapters.web.dto.output.GetUserResponse;
-import com.example.runner.SpringRunner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(
-    classes = SpringRunner.class,
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserUpdateIntegrationTest extends IntegrationTest {
-
-  @LocalServerPort private int port;
-
-  @Autowired private TestRestTemplate restTemplate;
 
   @DisplayName("User is updated with specified fields")
   @Test
@@ -77,9 +62,5 @@ public class UserUpdateIntegrationTest extends IntegrationTest {
     Assertions.assertNotEquals(
         response.getBody().getUser().getToken(), replaced.getBody().getUser().getToken());
     Assertions.assertEquals("new-name", replaced.getBody().getUser().getUsername());
-  }
-
-  private String createURLWithPort(String uri) {
-    return "http://localhost:" + port + uri;
   }
 }
