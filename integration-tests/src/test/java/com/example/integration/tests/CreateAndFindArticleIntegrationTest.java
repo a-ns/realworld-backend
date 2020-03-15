@@ -4,27 +4,12 @@ import com.example.adapters.web.dto.input.CreateArticlePayload;
 import com.example.adapters.web.dto.input.UserRegistrationPayload;
 import com.example.adapters.web.dto.output.GetArticleResponse;
 import com.example.adapters.web.dto.output.GetUserResponse;
-import com.example.runner.SpringRunner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(
-    classes = SpringRunner.class,
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CreateAndFindArticleIntegrationTest extends IntegrationTest {
-
-  @LocalServerPort private int port;
-
-  @Autowired private TestRestTemplate restTemplate;
 
   @Test
   void create_and_find_article() {
@@ -76,9 +61,5 @@ public class CreateAndFindArticleIntegrationTest extends IntegrationTest {
     Assertions.assertEquals("article-title1", articleFound.getBody().getSlug());
 
     Assertions.assertEquals("alex7", articleFound.getBody().getAuthor().getUsername());
-  }
-
-  private String createURLWithPort(String uri) {
-    return "http://localhost:" + port + uri;
   }
 }
