@@ -44,7 +44,7 @@
         <dependency>
             <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>altair-spring-boot-starter</artifactId>
-            <version>5.10.0</version>
+            <version>7.0.1</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
