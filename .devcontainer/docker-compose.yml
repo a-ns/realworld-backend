@@ -15,9 +15,9 @@ services:
   database:
     image: "postgres" # use latest official postgres version
     environment:
-      - POSTGRES_PASSWORD=unicorn_user
-      - POSTGRES_USER=magical_password
-      - POSTGRES_DB=realworld
+       POSTGRES_USER: unicorn_user
+       POSTGRES_PASSWORD: magical_password
+       POSTGRES_DB: realworld
     restart: unless-stopped
     ports:
       - 5432:5432

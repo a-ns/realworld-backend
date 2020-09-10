@@ -19,9 +19,10 @@
 		"gabrielbb.vscode-lombok",
 		"pivotal.vscode-spring-boot"
 	],
+	"mounts": ["source=${localEnv:USERPROFILE}\\.m2,target=/root/.m2,type=bind,consistency=cached"],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	 "forwardPorts": [8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "java -version",
