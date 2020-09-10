@@ -2,3 +2,7 @@
 bin/
 target/
 application.yml
+.classpath
+.factorypath
+.project
+.settings
