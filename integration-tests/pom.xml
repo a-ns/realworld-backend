@@ -21,13 +21,13 @@
         <dependency>
             <groupId>com.playtika.testcontainers</groupId>
             <artifactId>embedded-postgresql</artifactId>
-            <version>1.40</version>
+            <version>1.82</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.playtika.testcontainers</groupId>
             <artifactId>embedded-rabbitmq</artifactId>
-            <version>1.40</version>
+            <version>1.82</version>
             <scope>test</scope>
         </dependency>
         <dependency>
