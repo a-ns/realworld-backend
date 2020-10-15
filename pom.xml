@@ -13,6 +13,7 @@
         <module>runner</module>
         <module>adapters/event</module>
         <module>integration-tests</module>
+        <module>api</module>
     </modules>
 
     <parent>
@@ -68,23 +69,13 @@
     </dependencies>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>13</java.version>
     </properties>
 
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                 <executions>
-	             <execution>
-	            <configuration>
-	                <mainClass>com.example.runner.SpringRunner</mainClass>
-	            </configuration>
-	             </execution>
-	         </executions>
-            </plugin>
+ 
                 <plugin>
                     <groupId>com.cosium.code</groupId>
                     <artifactId>maven-git-code-format</artifactId>
