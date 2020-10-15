@@ -19,7 +19,6 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.8.1</junit-version>
         <springfox-version>2.9.2</springfox-version>
-        <datatype-threetenbp-version>2.6.4</datatype-threetenbp-version>
         <spring-boot-starter-test-version>2.1.1.RELEASE</spring-boot-starter-test-version>
         <spring-boot-starter-web-version>2.1.0.RELEASE</spring-boot-starter-web-version>
         <junit-version>4.12</junit-version>
